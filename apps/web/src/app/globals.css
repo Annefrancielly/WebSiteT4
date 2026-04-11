@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+  
+    --brand-orange: 28 100% 48%;
+    --brand-beige: 60 11% 93%;
+    --brand-black: 0 0% 0%;
+    --brand-turquoise: 181 59% 44%;
+    --background: var(--brand-beige);
+    --foreground: 0 0% 10%; 
+    --primary: var(--brand-orange);
+    --primary-foreground: 0 0% 100%; 
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: var(--brand-orange);
+ 
+    --radius: 0.5rem;
+
+    .t4-scrollbar {
+      scrollbar-width: auto;
+      scrollbar-color: transparent transparent;
+      scrollbar-gutter: stable;
+      overscroll-behavior: contain;
+    }
+    
+    .t4-scrollbar:hover {
+      scrollbar-color: rgba(20, 184, 166, 0.55) transparent;
+    }
+    
+    .t4-scrollbar::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    .t4-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 18px 0;
+      border-radius: 9999px;
+    }
+    
+    .t4-scrollbar::-webkit-scrollbar-thumb {
+      background: transparent;
+      border-radius: 9999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    
+    .t4-scrollbar:hover::-webkit-scrollbar-thumb {
+      background: rgba(20, 184, 166, 0.55);
+    }
+    
+    .t4-scrollbar:hover::-webkit-scrollbar-thumb:hover {
+      background: rgba(20, 184, 166, 0.75);
+    }
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-brand-dark;
+  }
+}
