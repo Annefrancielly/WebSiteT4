@@ -19,6 +19,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || "production";
 process.env.HOSTNAME = process.env.HOSTNAME || "0.0.0.0";
 
 console.log("[kinghost] PORT resolvida =", process.env.PORT);
-console.log("[kinghost] Server entry =", "./WebSiteT4/apps/web/server.js");
+console.log("[kinghost] Server entry =", "/WebSiteT4/apps/web/server.js");
 
 require("./WebSiteT4/apps/web/server.js");
