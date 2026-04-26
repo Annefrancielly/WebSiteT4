@@ -3,6 +3,7 @@ import { TripMemoriesCarousel } from "@/features/components/sections/TripMemorie
 import { Badge } from "@/features/components/ui/badge";
 import { getSurfTrips } from "@/lib/public-api";
 import { SurfTripDto } from "@/types/public-api";
+import { withBasePath } from "@/lib/paths";
 
 export default async function SurfTripsPage() {
   let trips: SurfTripDto[] = [];
@@ -20,7 +21,7 @@ export default async function SurfTripsPage() {
       <section className="relative flex h-[60vh] items-center justify-center overflow-hidden bg-brand-black pt-20">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/surf-trips-hero.jpg')" }}
+          style={{ backgroundImage: `url('${withBasePath("/surf-trips-hero.jpg")}')` }}
         />
         <div className="absolute inset-0 bg-black/40" />
 

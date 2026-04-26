@@ -5,13 +5,14 @@ import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { Badge } from "@/features/components/ui/badge";
 import { FAQ_DATA } from "@/constants/site-data";
+import { withBasePath } from "@/lib/paths";
 
 export function FaqSection() {
   return (
     <section id="faq" className="bg-[#F2F2F0] font-sans">
       <div className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-brand-black">
         <Image
-          src="/surf-trips-hero.jpg"
+          src={withBasePath("/surf-trips-hero.jpg")}
           alt="Capa FAQ"
           fill
           className="object-cover object-center"

@@ -7,6 +7,7 @@ import { Button } from '@/features/components/ui/button';
 import { Badge } from '@/features/components/ui/badge';
 //import { RelatosVideoDialog } from "../shared/RelatosVideoDialog";
 //import { RELATOS_YOUTUBE_URL } from "@/constants/site-data";
+import { withBasePath } from '@/lib/paths';
 
 type WhatsAppFeedback = {
   id: number;
@@ -19,31 +20,31 @@ type WhatsAppFeedback = {
 const WHATSAPP_FEEDBACKS: WhatsAppFeedback[] = [
   {
     id: 1,
-    src: '/feedback/whatsapp-0101.jpg',
-    alt: 'Print de feedback de aluno no WhatsApp sobre evolução no surf',
-    senderName: 'Fred',
-    caption: 'Feedback real (WhatsApp)',
+    src: withBasePath("/feedback/whatsapp-0101.jpg"),
+    alt: "Print de feedback de aluno no WhatsApp sobre evolução no surf",
+    senderName: "Fred",
+    caption: "Feedback real (WhatsApp)",
   },
   {
     id: 2,
-    src: '/feedback/whatsapp-0202.jpg',
-    alt: 'Print de depoimento no WhatsApp sobre aulas e metodologia',
-    senderName: 'Leonardo',
-    caption: 'Feedback real (WhatsApp)',
+    src: withBasePath("/feedback/whatsapp-0202.jpg"),
+    alt: "Print de depoimento no WhatsApp sobre aulas e metodologia",
+    senderName: "Leonardo",
+    caption: "Feedback real (WhatsApp)",
   },
   {
     id: 3,
-    src: '/feedback/relato4.jpg',
-    alt: 'Print de conversa no WhatsApp elogiando a evolução nas aulas',
-    senderName: 'Haniel',
-    caption: 'Feedback real (WhatsApp)',
+    src: withBasePath("/feedback/relato4.jpg"),
+    alt: "Print de conversa no WhatsApp elogiando a evolução nas aulas",
+    senderName: "Haniel",
+    caption: "Feedback real (WhatsApp)",
   },
   {
     id: 4,
-    src: '/feedback/Relato3.jpg',
-    alt: 'Print de avaliação de aluno no WhatsApp sobre experiência nas aulas',
-    senderName: 'Seichele Barbosa',
-    caption: 'Feedback real (Instagram)',
+    src: withBasePath("/feedback/Relato3.jpg"),
+    alt: "Print de avaliação de aluno no WhatsApp sobre experiência nas aulas",
+    senderName: "Seichele Barbosa",
+    caption: "Feedback real (Instagram)",
   },
 ];
 

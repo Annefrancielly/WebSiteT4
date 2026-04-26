@@ -13,6 +13,7 @@ import {
   SheetTitle,
 } from "@/features/components/ui/sheet";
 import { CURSOS_CONVERSAO_KIWIFY_URL } from "@/constants/site-data";
+import { withBasePath } from "@/lib/paths";
 
 type NavLink = {
   label: string;
@@ -44,7 +45,7 @@ export function Navbar() {
             aria-label="Ir para a página inicial"
           >
             <Image
-              src="/logo.png"
+              src={withBasePath("/logo.png")}
               alt="T4 Surf Logo"
               fill
               className="object-contain object-left"
@@ -85,7 +86,7 @@ export function Navbar() {
           aria-label="Ir para a página inicial"
         >
           <Image
-            src="/logo.png"
+            src={withBasePath("/logo.png")}
             alt="T4 Surf Logo"
             fill
             className="object-contain object-left"

@@ -1,17 +1,20 @@
 import { Badge } from "@/features/components/ui/badge";
 import { Medal } from "lucide-react";
+import { withBasePath } from "@/lib/paths";
 
 export function OnlineCoursesIntro() {
   return (
-    <section className="relative w-full min-h-[600px] flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+    <section className="relative flex w-full min-h-[560px] items-center justify-center overflow-hidden bg-brand-black md:min-h-[640px] lg:min-h-[720px]">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[#2FB1B3]/20 mix-blend-multiply z-10" />
-        <div className="absolute inset-0 bg-black/30 z-10" />
+        <div className="absolute inset-0 z-10 bg-[#2FB1B3]/15 mix-blend-multiply" />
+        <div className="absolute inset-0 z-10 bg-black/20" />
 
         <div
-          className="w-full h-full bg-cover bg-[center_30%]"
-          style={{ backgroundImage: "url('/Alongamento.jpg')" }}
+          className="h-full w-full bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('${withBasePath("/curso.jpeg")}')`,
+            backgroundSize: "102% auto",
+          }}
         />
       </div>
 

@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   type LucideIcon
 } from "lucide-react";
+import { withBasePath } from "@/lib/paths";
 
 // --- TIPOS ---
 export interface CourseDetail {
@@ -50,8 +51,8 @@ export const COURSE_DETAILS: Record<string, CourseDetail> = {
     title: "Aprendendo a surfar do zero ao intermediário",
     subtitle: "Pare de remar para onda ruim! O posicionamento certo significa mais ondas e evolução rápida.",
     category: "Intermediário",
-    image: "/curso.jpeg",
-    videoThumb: "/curso.jpeg",
+    image: withBasePath("/curso.jpeg"),
+    videoThumb: withBasePath("/curso.jpeg"),
     //videoUrl: "https://youtu.be/oWz-Lu7y268?si=YeO6nFfyQyeh3O7x",
     rating: "4.9",
     students: "150",

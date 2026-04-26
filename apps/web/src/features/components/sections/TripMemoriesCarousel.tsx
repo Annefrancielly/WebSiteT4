@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/features/components/ui/badge";
 import { Button } from "@/features/components/ui/button";
+import { withBasePath } from "@/lib/paths";
 
 type TripMemory = {
   id: number;
@@ -17,63 +18,63 @@ type TripMemory = {
 const TRIP_MEMORIES: TripMemory[] = [
   {
     id: 1,
-    src: "/trip/trip9.jpeg",
+    src: withBasePath("/trip/trip9.jpeg"),
     alt: "Recordação de surf trip da T4 em Pipa",
     title: "Memórias Pipa 2026",
     subtitle: "Ondas, conexão e evolução",
   },
   {
     id: 2,
-    src: "/trip/trip2.jpeg",
+    src: withBasePath("/trip/trip2.jpeg"),
     alt: "Recordação de surf trip da T4 com vista do mar",
     title: "Memórias Pipa 2026",
     subtitle: "Experiências marcantes",
   },
   {
     id: 3,
-    src: "/trip/trip3.jpeg",
+    src: withBasePath("/trip/trip3.jpeg"),
     alt: "Recordação de surf trip da T4 com grupo reunido",
     title: "Memórias Pipa 2026",
     subtitle: "Dias intensos no mar",
   },
   {
     id: 4,
-    src: "/trip/trip4.jpeg",
+    src: withBasePath("/trip/trip4.jpeg"),
     alt: "Recordação de surf trip da T4 em clima de viagem",
     title: "Memórias Pipa 2026",
     subtitle: "Mais aventuras chegando",
   },
   {
     id: 5,
-    src: "/trip/trip5.jpeg",
+    src: withBasePath("/trip/trip5.jpeg"),
     alt: "Recordação de surf trip da T4 em clima de viagem",
     title: "Memórias Pipa 2026",
     subtitle: "Momentos inesquecíveis de aprendizado e diversão",
   },
   {
     id: 6,
-    src: "/trip/trip6.jpeg",
+    src: withBasePath("/trip/trip6.jpeg"),
     alt: "Recordação de surf trip da T4 em clima de viagem",
     title: "Memórias Pipa 2026",
     subtitle: "A energia do mar e a vibe da galera",
   },
   {
     id: 7,
-    src: "/trip/trip7.jpeg",
+    src: withBasePath("/trip/trip7.jpeg"),
     alt: "Recordação de surf trip da T4 em clima de viagem",
     title: "Memórias Pipa 2026",
     subtitle: "A melhor vibe de surf",
   },
   {
     id: 8,
-    src: "/trip/trip8.jpeg",
+    src: withBasePath("/trip/trip8.jpeg"),
     alt: "Recordação de surf trip da T4 em clima de viagem",
     title: "Memórias Pipa 2026",
     subtitle: "O melhor do surf, da conexão e da vibe",
   },
   {
     id: 9,
-    src: "/trip/trip1.jpeg",
+    src: withBasePath("/trip/trip1.jpeg"),
     alt: "Recordação de surf trip da T4 em clima de viagem",
     title: "Memórias Pipa 2026",
     subtitle: "Conhecer novos amigos e aprender com eles",

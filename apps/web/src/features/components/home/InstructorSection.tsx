@@ -4,6 +4,7 @@ import { RelatosVideoDialog } from '@/features/components/shared/RelatosVideoDia
 import { PROFESSOR_TRAJETORIA_YOUTUBE_URL } from '@/constants/site-data';
 import { Star, Trophy, Target, Users, LucideIcon, Instagram } from 'lucide-react';
 import { Button } from '../ui/button';
+import { withBasePath } from '@/lib/paths';
 
 export function InstructorSection() {
   return (
@@ -77,7 +78,7 @@ export function InstructorSection() {
           <div className="flex-1 w-full lg:h-auto min-h-[500px] relative">
             <div className="aspect-[4/5] w-full bg-gray-200 rounded-3xl shadow-2xl flex items-center justify-center relative overflow-hidden">
               <Image
-                src="/instrutor.jpg"
+                src={withBasePath("/instrutor.jpg")}
                 alt="Ricardo Torquato"
                 fill
                 className="object-cover"

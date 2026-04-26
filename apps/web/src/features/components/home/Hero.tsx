@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/features/components/ui/button";
 import { Trophy } from "lucide-react";
+import { withBasePath } from "@/lib/paths";
 
 export function Hero() {
   return (
     <section className="relative w-full h-[95vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-brand-black">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/hero-v2.jpg"
+          src={withBasePath("/hero-v2.jpg")}
           alt="Surfista pegando uma onda"
           fill
           className="object-cover"

@@ -3,6 +3,7 @@ import { Instagram, MessageCircle, LucideIcon } from "lucide-react";
 import { Button } from "@/features/components/ui/button";
 import { Separator } from "@/features/components/ui/separator";
 import Image from "next/image";
+import { withBasePath } from "@/lib/paths";
 
 export function Footer() {
   return (
@@ -11,7 +12,7 @@ export function Footer() {
         <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-4">
           <div className="space-y-4">
             <Image
-              src="/logo.png"
+              src={withBasePath("/logo.png")}
               alt="T4 Surf"
               width={160}
               height={56}

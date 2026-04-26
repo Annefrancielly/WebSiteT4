@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/lib/paths";
 
 export function StatsStrip() {
   return (
@@ -7,7 +8,7 @@ export function StatsStrip() {
         <div className="flex items-center gap-6">
           <div className="relative w-20 h-10 md:w-28 md:h-12">
             <Image 
-              src="/logo.png" 
+              src={withBasePath("/logo.png")} 
               alt="T4 Surf Logo" 
               fill 
               className="object-contain object-left" 
