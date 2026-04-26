@@ -1,0 +1,10 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/agendar-aula/page": "/agendar-aula",
+  "/cursos/page": "/cursos",
+  "/faq/page": "/faq",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/surf-trips/page": "/surf-trips"
+}

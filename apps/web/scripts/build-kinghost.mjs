@@ -23,6 +23,52 @@ function copy(src, dest) {
   fs.cpSync(src, dest, { recursive: true });
 }
 
+function exists(filePath) {
+  return fs.existsSync(filePath);
+}
+
+function findStandaloneServer(startDir) {
+  const preferredCandidates = [
+    path.join(startDir, "server.js"),
+    path.join(startDir, "apps", "web", "server.js"),
+    path.join(startDir, "web", "server.js"),
+  ];
+
+  for (const candidate of preferredCandidates) {
+    if (exists(candidate)) {
+      return candidate;
+    }
+  }
+
+  const stack = [startDir];
+
+  while (stack.length > 0) {
+    const currentDir = stack.pop();
+    const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+
+    for (const entry of entries) {
+      if (entry.name === "node_modules" || entry.name === ".git") {
+        continue;
+      }
+
+      const fullPath = path.join(currentDir, entry.name);
+
+      if (entry.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+
+      if (entry.isFile() && entry.name === "server.js") {
+        return fullPath;
+      }
+    }
+  }
+
+  throw new Error(
+    `Não foi possível localizar o server.js do standalone dentro de: ${startDir}`
+  );
+}
+
 console.log("1) Next build (standalone)...");
 execSync("next build", { stdio: "inherit" });
 
@@ -33,40 +79,45 @@ ensureDir(DIST);
 console.log("3) Copiando .next/standalone -> dist...");
 copy(STANDALONE, DIST);
 
-console.log("4) Copiando .next/static -> dist/.next/static...");
-ensureDir(path.join(DIST, ".next"));
-copy(STATIC, path.join(DIST, ".next", "static"));
+const serverFile = findStandaloneServer(DIST);
+const serverDir = path.dirname(serverFile);
+const serverRequirePath =
+  "./" + path.relative(DIST, serverFile).replace(/\\/g, "/");
 
-console.log("5) Copiando public -> dist/public...");
-copy(PUBLIC, path.join(DIST, "public"));
+console.log("4) Server standalone encontrado em:", serverRequirePath);
 
-console.log("6) Criando wrapper KingHost (dist/app.js)...");
+console.log("5) Copiando .next/static para a raiz real do standalone...");
+ensureDir(path.join(serverDir, ".next"));
+copy(STATIC, path.join(serverDir, ".next", "static"));
+
+console.log("6) Copiando public para a raiz real do standalone...");
+copy(PUBLIC, path.join(serverDir, "public"));
+
+console.log("7) Criando wrapper KingHost (dist/app.js)...");
 const wrapper = `"use strict";
 
 function resolveKingHostPort() {
-  // 1) Se existir PORT "padrão", usa primeiro.
-  if (process.env.PORT && /^\\d+$/.test(process.env.PORT)) return Number(process.env.PORT);
+  if (process.env.PORT && /^\\d+$/.test(process.env.PORT)) {
+    return Number(process.env.PORT);
+  }
 
-  // 2) KingHost costuma expor porta como PORT_<NOME_DO_SCRIPT> (ex.: PORT_APP).
-  // Então buscamos a primeira variável PORT_* numérica.
   const fromPortPrefix = Object.entries(process.env)
-    .filter(([k, v]) => k.startsWith("PORT_") && typeof v === "string" && /^\\d+$/.test(v))
-    .map(([, v]) => Number(v))[0];
+    .filter(([key, value]) => key.startsWith("PORT_") && typeof value === "string" && /^\\d+$/.test(value))
+    .map(([, value]) => Number(value))[0];
 
   return fromPortPrefix || 3000;
 }
 
 const port = resolveKingHostPort();
 
-// Garantimos que o server do Next vai ler a porta correta.
 process.env.PORT = String(port);
 process.env.NODE_ENV = process.env.NODE_ENV || "production";
 process.env.HOSTNAME = process.env.HOSTNAME || "0.0.0.0";
 
 console.log("[kinghost] PORT resolvida =", process.env.PORT);
+console.log("[kinghost] Server entry =", ${JSON.stringify(serverRequirePath)});
 
-// Server gerado pelo Next (standalone)
-require("./server.js");
+require(${JSON.stringify(serverRequirePath)});
 `;
 
 fs.writeFileSync(path.join(DIST, "app.js"), wrapper, "utf8");
