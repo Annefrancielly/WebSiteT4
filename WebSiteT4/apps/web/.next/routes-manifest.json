@@ -2,17 +2,8 @@
   "version": 3,
   "pages404": true,
   "caseSensitive": false,
-  "basePath": "/apps_nodejs/t4surf-web",
+  "basePath": "",
   "redirects": [
-    {
-      "source": "/apps_nodejs/t4surf-web/",
-      "destination": "/apps_nodejs/t4surf-web",
-      "basePath": false,
-      "internal": true,
-      "priority": true,
-      "statusCode": 308,
-      "regex": "^/apps_nodejs/t4surf-web/$"
-    },
     {
       "source": "/:path+/",
       "destination": "/:path+",
