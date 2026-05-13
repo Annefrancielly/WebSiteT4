@@ -1,2 +1,0 @@
-:HL["/apps_nodejs/t4surf-web/_next/static/chunks/fbaa329b5c0c024e.css","style"]
-0:{"buildId":"Q0tz6iocbQd2eMLIfOGxZ","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"/_not-found","paramType":null,"paramKey":"/_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
