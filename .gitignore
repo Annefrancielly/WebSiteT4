@@ -39,3 +39,5 @@ Thumbs.db
 *.tsbuildinfo
 
 apps/WebSiteT4-deploy/
+.deploy/
+apps/api/api.zip

@@ -7,3 +7,6 @@ __MACOSX
 coverage
 sql
 001_surf_trips.sql
+
+.deploy/
+apps/api/api.zip

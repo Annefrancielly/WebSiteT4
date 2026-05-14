@@ -17,17 +17,41 @@ function parseAllowedOrigins(value: string): string[] {
     .filter(Boolean);
 }
 
+function resolveRuntimePort(): number {
+  if (process.env.PORT && /^\d+$/.test(process.env.PORT)) {
+    return Number(process.env.PORT);
+  }
+
+  const portEntry = Object.entries(process.env).find(([key, value]) => {
+    return (
+      key.startsWith('PORT_') &&
+      typeof value === 'string' &&
+      /^\d+$/.test(value)
+    );
+  });
+
+  if (portEntry) {
+    return Number(portEntry[1]);
+  }
+
+  return 3333;
+}
+
+function normalizePortEnv(): void {
+  process.env.PORT = String(resolveRuntimePort());
+}
+
 type CorsCallback = (err: Error | null, allow?: boolean) => void;
 
 async function bootstrap() {
+  normalizePortEnv();
+
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
 
-  // Segurança e performance baseline
   app.use(helmet());
   app.use(compression());
 
-  // Validação forte de payload
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -36,17 +60,14 @@ async function bootstrap() {
     }),
   );
 
-  // CORS allowlist (separado por vírgula)
   const allowedOrigins = parseAllowedOrigins(
     config.get<string>('CORS_ORIGIN', ''),
   );
 
   app.enableCors({
     origin: (origin: string | undefined, cb: CorsCallback) => {
-      // chamadas server-to-server podem não ter origin
       if (!origin) return cb(null, true);
 
-      // se allowlist não está configurada, libera (útil em dev)
       if (allowedOrigins.length === 0) return cb(null, true);
 
       if (allowedOrigins.includes(origin)) return cb(null, true);
@@ -56,8 +77,8 @@ async function bootstrap() {
     credentials: false,
   });
 
-  // Swagger condicional
   const swaggerEnabled = config.get<boolean>('SWAGGER_ENABLED', true);
+
   if (swaggerEnabled) {
     const swaggerPath = config.get<string>('SWAGGER_PATH', 'docs');
 
@@ -71,8 +92,11 @@ async function bootstrap() {
     SwaggerModule.setup(swaggerPath, app, document);
   }
 
-  const port = config.get<number>('PORT', 3333);
-  await app.listen(port);
+  const port = resolveRuntimePort();
+
+  await app.listen(port, '0.0.0.0');
+
+  console.log(`[api] T4 Surf API running on 0.0.0.0:${port}`);
 }
 
 void bootstrap();
