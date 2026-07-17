@@ -142,7 +142,16 @@ export function Footer() {
           </p>
 
           <div className="flex items-center gap-2">
-            <span>Desenvolvido com metodologia XP</span>
+          <li>
+                <Link
+                  href="https://wa.me/+5579999331339"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-white"
+                >
+                  Desenvolvido por Anne Siqueira
+                </Link>
+              </li>
           </div>
         </div>
       </div>
