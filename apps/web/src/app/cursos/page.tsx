@@ -1,19 +1,21 @@
 import Link from 'next/link';
 import { OnlineCoursesIntro } from '@/features/components/home/OnlineCoursesIntro';
 import { PainPointsSection } from '@/features/components/home/PainPointsSection';
-import { CoursesSection } from '@/features/components/sections/CoursesSection';
 import { FaqContactSection } from '@/features/components/home/FaqContactSection';
 import { MethodologySection } from '@/features/components/home/MethodologySection';
+import { CoursePreviewSection } from '@/features/components/sections/CoursePreviewSection';
+import { TestimonialsSection } from '@/features/components/home/TestimonialSection';
 
 export default function CursosPage() {
   return (
     <section className="bg-brand-beige">
       <OnlineCoursesIntro />
+
+      <CoursePreviewSection />
       <PainPointsSection />
 
       <MethodologySection badgeLabel="Metodologia" sectionTitle="Fase 1 e Fase 2 do Método T4" />
-
-      <CoursesSection />
+      <TestimonialsSection />
       <FaqContactSection />
 
       <div className="px-4 pb-10 pt-2">

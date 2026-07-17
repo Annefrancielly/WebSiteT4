@@ -53,7 +53,7 @@ export const COURSE_DETAILS: Record<string, CourseDetail> = {
     category: "Intermediário",
     image: withBasePath("/curso.jpeg"),
     videoThumb: withBasePath("/curso.jpeg"),
-    //videoUrl: "https://youtu.be/oWz-Lu7y268?si=YeO6nFfyQyeh3O7x",
+    videoUrl: "https://youtu.be/tbGmUWUBvxo?si=Axn2T4Y1YywKxlEn",
     rating: "4.9",
     students: "150",
     duration: "3h 45min",
