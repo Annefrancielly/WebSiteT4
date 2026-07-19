@@ -21,32 +21,32 @@ const INSTRUCTOR_PHOTOS: InstructorPhoto[] = [
   },
   {
     id: 2,
-    src: withBasePath("/Ricardo/Ricardo2.jpg"),
+    src: withBasePath("/Ricardo/Ricardo2.JPG"),
     alt: "Ricardo Torquato durante aula de surf",
   },
   {
     id: 3,
-    src: withBasePath("/Ricardo/Ricardo3.jpg"),
+    src: withBasePath("/Ricardo/Ricardo3.JPG"),
     alt: "Ricardo Torquato orientando aluno no surf",
   },
   {
     id: 4,
-    src: withBasePath("/Ricardo/Ricardo4.jpg"),
+    src: withBasePath("/Ricardo/Ricardo4.JPG"),
     alt: "Ricardo Torquato surfando",
   },
   {
     id: 5,
-    src: withBasePath("/Ricardo/Ricardo5.jpg"),
+    src: withBasePath("/Ricardo/Ricardo5.JPG"),
     alt: "Ricardo Torquato orientando aluno no surf",
   },
   {
     id: 6,
-    src: withBasePath("/Ricardo/Ricardo6.jpg"),
+    src: withBasePath("/Ricardo/Ricardo6.JPG"),
     alt: "Ricardo Torquato orientando aluno no surf",
   },
   {
     id: 7,
-    src: withBasePath("/Ricardo/Ricardo7.jpg"),
+    src: withBasePath("/Ricardo/Ricardo7.JPG"),
     alt: "Ricardo Torquato orientando aluno no surf",
   }
 ];
