@@ -51,7 +51,7 @@ export const COURSE_DETAILS: Record<string, CourseDetail> = {
     title: "Aprendendo a surfar do zero ao intermediário",
     subtitle: "Pare de remar para onda ruim! O posicionamento certo significa mais ondas e evolução rápida.",
     category: "Intermediário",
-    image: withBasePath("/curso.jpeg"),
+    image: "/courses/Banner-Desktop-T4.png",
     videoThumb: withBasePath("/curso.jpeg"),
     videoUrl: "https://youtu.be/tbGmUWUBvxo?si=Axn2T4Y1YywKxlEn",
     rating: "4.9",

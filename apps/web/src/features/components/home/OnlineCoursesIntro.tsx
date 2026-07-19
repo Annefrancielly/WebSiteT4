@@ -1,7 +1,7 @@
 import { withBasePath } from '@/lib/paths';
 
-const COURSES_HERO_DESKTOP_IMAGE = withBasePath('/courses/banner-desktop-t4.png');
-const COURSES_HERO_MOBILE_IMAGE = withBasePath('/courses/banner-mobile-t4.png');
+const COURSES_HERO_DESKTOP_IMAGE = withBasePath("/courses/Banner-Desktop-T4.png");
+const COURSES_HERO_MOBILE_IMAGE = withBasePath("/courses/Banner-Mobile-T4.png");
 
 export function OnlineCoursesIntro() {
   return (
