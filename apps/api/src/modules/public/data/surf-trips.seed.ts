@@ -16,7 +16,7 @@ export const SURF_TRIPS_SEED: SurfTripDto[] = [
     about:
       'Surf trip planejada para evolução real: sessões guiadas, suporte completo e foco em segurança no mar e progressão técnica.',
     image: '/pipa-trip.jpg',
-    levelLabel: 'Intermediário',
+    levelLabel: 'Todos os níveis',
     includes: [
       'Acomodação premium',
       'Transporte local',
