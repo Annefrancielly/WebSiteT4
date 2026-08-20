@@ -28,8 +28,18 @@ export function Hero() {
         </div>
 
         <h1 className="animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200 text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 leading-tight tracking-tighter max-w-6xl drop-shadow-2xl">
-           Aprenda a Surfar com <br className="hidden md:block" />
-          <span className="text-brand-orange">Consciência, Controle e Confiança</span>
+          Aprenda a Surfar com<br className="hidden md:block" />
+          {/*
+            pr-[0.05em] compensa o tracking-tighter. O letter-spacing negativo
+            é aplicado DEPOIS de cada caractere, inclusive o último — então a
+            caixa da linha fica 0,05em mais estreita que o desenho das letras.
+            Centralizada, a caixa fica no meio, mas as letras sobram para a
+            direita em metade disso. Medido: +2,5px de desvio; com o padding,
+            -0,5px. Como o valor é em em, escala junto com os breakpoints.
+          */}
+          <span className="text-brand-orange pr-[0.05em]">
+            Consciência, Controle e Confiança
+          </span>
         </h1>
 
         <p className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 text-lg md:text-2xl text-gray-200 max-w-3xl mb-12 leading-relaxed font-medium drop-shadow-md">

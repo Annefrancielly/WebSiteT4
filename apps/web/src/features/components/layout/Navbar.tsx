@@ -144,7 +144,7 @@ export function Navbar() {
                 <div className="mx-auto w-full max-w-[320px] flex flex-col gap-8">
                   <div className="relative w-40 h-12 mx-auto">
                     <Image
-                      src="/logo.png"
+                      src={withBasePath("/logo.png")}
                       alt="T4 Surf"
                       fill
                       className="object-contain"

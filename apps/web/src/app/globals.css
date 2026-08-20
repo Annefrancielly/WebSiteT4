@@ -5,10 +5,10 @@
 @layer base {
   :root {
   
-    --brand-orange: 28 100% 48%;
-    --brand-beige: 60 11% 93%;
-    --brand-black: 0 0% 0%;
-    --brand-turquoise: 181 59% 44%;
+    --brand-orange: 28 100% 48%;    /* #F37100 - Pantone 144 C, principal */
+    --brand-beige: 50 16% 93%;      /* #EFEEE9 - Pantone 7527 C, creme     */
+    --brand-black: 0 0% 0%;         /* #000000 - preto, principal          */
+    --brand-turquoise: 181 58% 44%; /* #2FB1B3 - turquesa, secundaria      */
     --background: var(--brand-beige);
     --foreground: 0 0% 10%; 
     --primary: var(--brand-orange);
@@ -36,6 +36,14 @@
     --ring: var(--brand-orange);
  
     --radius: 0.5rem;
+
+    /* --- Derivada acessivel --------------------------------------------
+       O DNA da marca define QUATRO cores: laranja, turquesa, creme e preto.
+       Nao existe verde na identidade. Os precos usam o turquesa - a cor
+       secundaria oficial - escurecido ate 26% de luminosidade: o turquesa
+       puro rende apenas 2,24:1 sobre o creme e reprovaria em WCAG AA.
+       Nesta variacao o contraste sobe para 5,5:1. */
+    --brand-turquoise-deep: 181 58% 26%;
 
     .t4-scrollbar {
       scrollbar-width: auto;
@@ -83,6 +91,6 @@
     @apply bg-background text-foreground antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply text-brand-dark;
+    @apply font-display font-bold text-brand-dark;
   }
 }

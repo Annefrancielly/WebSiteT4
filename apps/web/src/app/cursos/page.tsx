@@ -1,10 +1,23 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { OnlineCoursesIntro } from '@/features/components/home/OnlineCoursesIntro';
 import { PainPointsSection } from '@/features/components/home/PainPointsSection';
 import { FaqContactSection } from '@/features/components/home/FaqContactSection';
 import { MethodologySection } from '@/features/components/home/MethodologySection';
 import { CoursePreviewSection } from '@/features/components/sections/CoursePreviewSection';
+import { CoursesShowcase } from '@/features/components/courses/CoursesShowcase';
 import { TestimonialsSection } from '@/features/components/home/TestimonialSection';
+
+/**
+ * Metadata própria da página. Antes ela herdava o title genérico do layout,
+ * o que desperdiçava a principal página comercial do site nos resultados de
+ * busca. Título e descrição reaproveitam a copy já aprovada pelo cliente.
+ */
+export const metadata: Metadata = {
+  title: 'Cursos de Surf Online | T4 Surf',
+  description:
+    'Aprenda a surfar do zero ao avançado. O método completo mais prático, rápido e seguro para você dominar o surf de verdade.',
+};
 
 export default function CursosPage() {
   return (
@@ -12,6 +25,7 @@ export default function CursosPage() {
       <OnlineCoursesIntro />
 
       <CoursePreviewSection />
+      <CoursesShowcase id="cursos" />
       <PainPointsSection />
 
       <MethodologySection badgeLabel="Metodologia" sectionTitle="Fase 1 e Fase 2 do Método T4" />
