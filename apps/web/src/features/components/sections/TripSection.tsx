@@ -199,7 +199,7 @@ export function TripSection({ trips }: { trips: SurfTripDto[] }) {
                               className="w-full bg-[#22C55E] hover:bg-[#16A34A] text-white font-black h-14 rounded-2xl uppercase text-xs tracking-widest flex gap-2 shadow-lg shadow-green-500/20 transition-all active:scale-95 mt-4"
                               asChild
                             >
-                              <Link href={whatsappUrl} target="_blank">
+                              <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                                 <MessageCircle className="w-5 h-5 fill-current" /> Conversar no WhatsApp
                               </Link>
                             </Button>
@@ -211,7 +211,7 @@ export function TripSection({ trips }: { trips: SurfTripDto[] }) {
                         className="flex-1 md:w-48 h-12 bg-brand-orange hover:bg-orange-600 text-white font-black uppercase text-xs rounded-xl shadow-lg shadow-orange-500/10 transition-transform active:scale-95"
                         asChild
                       >
-                        <Link href={whatsappUrl} target="_blank">
+                        <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                           Quero Ir!
                         </Link>
                       </Button>

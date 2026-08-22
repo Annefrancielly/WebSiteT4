@@ -61,7 +61,9 @@ export function Navbar() {
             <a
               href={CURSOS_CONVERSAO_KIWIFY_URL}
               target="_blank"
-              rel="noopener noreferrer"
+              // Apenas noopener, como em CheckoutLink.tsx: noreferrer removeria
+              // o Referer e cegaria a atribuição de venda na Kiwify.
+              rel="noopener"
               aria-label="Comprar agora na Kiwify"
             >
               Comprar agora

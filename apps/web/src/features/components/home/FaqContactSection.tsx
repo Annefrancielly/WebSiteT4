@@ -33,7 +33,11 @@ export function FaqContactSection() {
             className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold h-14 text-lg rounded-xl shadow-lg transition-transform hover:scale-105"
             asChild
           >
-            <a href="https://wa.me/+5579988330770" target="_blank">
+            <a
+              href="https://wa.me/+5579988330770"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Chamar no WhatsApp
             </a>
           </Button>

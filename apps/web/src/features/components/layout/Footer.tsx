@@ -123,7 +123,11 @@ export function Footer() {
               className="w-full gap-2 border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
               asChild
             >
-              <Link href="https://wa.me/+5579988330770" target="_blank">
+              <Link
+                href="https://wa.me/+5579988330770"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <MessageCircle className="h-4 w-4 text-green-500" />
                 WhatsApp Oficial
               </Link>

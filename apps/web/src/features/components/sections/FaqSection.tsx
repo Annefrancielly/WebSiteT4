@@ -67,6 +67,7 @@ export function FaqSection() {
           <Link
             href="https://wa.me/+5579988330770"
             target="_blank"
+            rel="noopener noreferrer"
             className="bg-[#50C76C] hover:bg-[#45b560] text-white font-[800] px-12 py-6 rounded-2xl inline-flex items-center gap-4 transition-all hover:scale-105 shadow-2xl shadow-green-500/20 uppercase text-xs tracking-[0.2em]"
           >
             <MessageCircle className="w-6 h-6 fill-current" /> Falar no WhatsApp
