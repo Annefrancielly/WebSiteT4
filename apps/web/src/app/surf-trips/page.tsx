@@ -4,17 +4,49 @@ import { Badge } from "@/features/components/ui/badge";
 import { getSurfTrips } from "@/lib/public-api";
 import { SurfTripDto } from "@/types/public-api";
 import { withBasePath } from "@/lib/paths";
+import reservaJson from "@/constants/surf-trips-fallback.json";
+
+/**
+ * Instantâneo da própria API, commitado.
+ *
+ * Sem `as`: a atribuição já é validada estruturalmente contra SurfTripDto. Se o
+ * contrato da API mudar e este arquivo ficar para trás, o build acusa.
+ *
+ * Para atualizar:
+ *   curl -s https://api.t4surf.com.br/public/surf-trips \
+ *     | python3 -m json.tool > src/constants/surf-trips-fallback.json
+ */
+const TRIPS_DE_RESERVA: SurfTripDto[] = reservaJson;
+
+/**
+ * Esta página é gerada em tempo de build (output: "export"). O que for
+ * renderizado aqui fica congelado no HTML — inclusive um estado de erro.
+ *
+ * Por isso não existe caminho que produza "falha ao carregar": ou vêm os dados
+ * da API, ou vem o instantâneo. Um visitante nunca deve ler "tente novamente"
+ * numa página que é um arquivo e nunca vai tentar de novo.
+ */
+async function carregarSurfTrips(): Promise<SurfTripDto[]> {
+  try {
+    const trips = await getSurfTrips();
+
+    // Lista vazia NÃO é falha: pode não haver trip aberta no momento. Cair no
+    // instantâneo aqui anunciaria viagens que já não existem.
+    console.log(`[build] surf trips carregadas da API: ${trips.length}`);
+
+    return trips;
+  } catch (error) {
+    console.warn(
+      `[build] API indisponível — usando o instantâneo commitado (${TRIPS_DE_RESERVA.length} trips).`,
+      error,
+    );
+
+    return TRIPS_DE_RESERVA;
+  }
+}
 
 export default async function SurfTripsPage() {
-  let trips: SurfTripDto[] = [];
-  let tripsLoadFailed = false;
-
-  try {
-    trips = await getSurfTrips();
-  } catch (error) {
-    tripsLoadFailed = true;
-    console.error("Failed to load surf trips:", error);
-  }
+  const trips = await carregarSurfTrips();
 
   return (
     <section className="min-h-screen">
@@ -41,26 +73,7 @@ export default async function SurfTripsPage() {
         </div>
       </section>
 
-      {tripsLoadFailed ? (
-        <section className="bg-[#F2F2F0] py-20">
-          <div className="container mx-auto px-6 text-center">
-            <Badge className="mb-4 border-none bg-red-100 px-4 py-1 text-xs font-bold uppercase tracking-wide text-red-700">
-              Instabilidade temporária
-            </Badge>
-
-            <h2 className="mb-3 text-2xl font-bold text-brand-dark md:text-3xl">
-              Não foi possível carregar as surf trips agora
-            </h2>
-
-            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600 md:text-base">
-              Houve uma falha temporária ao buscar as viagens disponíveis.
-              Tente novamente em instantes.
-            </p>
-          </div>
-        </section>
-      ) : (
-        <TripSection trips={trips} />
-      )}
+      <TripSection trips={trips} />
 
       <TripMemoriesCarousel />
     </section>

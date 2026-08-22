@@ -36,10 +36,17 @@ function getApiTimeoutMs(): number {
   return parsed;
 }
 
-async function apiGet<T>(path: string, revalidateSeconds: number): Promise<T> {
+/**
+ * Uma única ida à API. Fica isolada de apiGet para que a política de repetição
+ * seja uma decisão explícita, separada do transporte.
+ */
+async function buscarUmaVez<T>(
+  path: string,
+  revalidateSeconds: number,
+  timeoutMs: number,
+): Promise<T> {
   const base = getApiBaseUrl();
   const url = `${base}${path}`;
-  const timeoutMs = getApiTimeoutMs();
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -97,6 +104,46 @@ async function apiGet<T>(path: string, revalidateSeconds: number): Promise<T> {
   }
 }
 
+type OpcoesDeBusca = {
+  /**
+   * Tentativas totais. Existe por causa do cold start: a instância da API dorme
+   * por inatividade, e a primeira requisição depois disso gasta o tempo
+   * acordando o serviço em vez de trazer dado.
+   */
+  tentativas?: number;
+  /**
+   * Sobrescreve o timeout padrão. Chamada feita em tempo de build tolera espera
+   * longa — ninguém está diante da tela. Em runtime, não.
+   */
+  timeoutMs?: number;
+};
+
+async function apiGet<T>(
+  path: string,
+  revalidateSeconds: number,
+  opcoes: OpcoesDeBusca = {},
+): Promise<T> {
+  const { tentativas = 1, timeoutMs = getApiTimeoutMs() } = opcoes;
+
+  let ultimoErro: unknown;
+
+  for (let tentativa = 1; tentativa <= tentativas; tentativa += 1) {
+    try {
+      return await buscarUmaVez<T>(path, revalidateSeconds, timeoutMs);
+    } catch (error) {
+      ultimoErro = error;
+
+      if (tentativa < tentativas) {
+        console.warn(
+          `[api] ${path} — tentativa ${tentativa}/${tentativas} falhou, repetindo`,
+        );
+      }
+    }
+  }
+
+  throw ultimoErro;
+}
+
 export async function getCourses(): Promise<CourseDetailDto[]> {
   return apiGet<CourseDetailDto[]>("/public/courses", 300);
 }
@@ -119,7 +166,13 @@ export async function getCourseBySlug(
 }
 
 export async function getSurfTrips(): Promise<SurfTripDto[]> {
-  return apiGet<SurfTripDto[]>("/public/surf-trips", 60);
+  // Esta chamada acontece em tempo de build (output: "export"), então pode
+  // esperar. Duas tentativas de 60s: a primeira acorda a instância, a segunda
+  // traz o dado. Com os 8s padrão, um build com a API fria falhava sempre.
+  return apiGet<SurfTripDto[]>("/public/surf-trips", 60, {
+    tentativas: 2,
+    timeoutMs: 60_000,
+  });
 }
 
 export async function getSurfTripBySlug(
