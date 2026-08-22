@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "verificar": "tsc --noEmit && npm run lint && npm run build && node scripts/check-links.mjs && node scripts/check-peso.mjs",
     "lint": "eslint", 
     "build:kinghost": "node scripts/build-kinghost.mjs"
   },
