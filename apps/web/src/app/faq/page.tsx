@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { FaqSection } from "@/features/components/sections/FaqSection";
+
+export const metadata: Metadata = {
+  title: "Perguntas Frequentes",
+  description:
+    "Como funciona o curso, qual nível escolher, equipamento necessário, acesso e garantia. As dúvidas mais comuns sobre o Método T4.",
+};
 
 export default function FAQPage() {
   return (

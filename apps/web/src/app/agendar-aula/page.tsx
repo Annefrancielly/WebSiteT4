@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
 import { ContactCards } from "@/features/components/sections/ContactCards";
 import { BusinessHours } from "@/features/components/sections/BusinessHours";
 import { TrustBar } from "@/features/components/sections/TrustBar";
+
+/**
+ * A cidade entra no título de propósito: esta é a única página com intenção de
+ * busca local ("aula de surf em Aracaju"), e busca local tem a maior intenção
+ * de compra do site.
+ */
+export const metadata: Metadata = {
+  title: "Aulas de Surf em Aracaju",
+  description:
+    "Aulas presenciais de surf em Aracaju com Ricardo Torquato. Equipamento incluso, do primeiro dia ao avançado. Agende pelo WhatsApp.",
+};
 
 export default function AgendarAulaPage() {
   return (

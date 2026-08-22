@@ -14,7 +14,8 @@ import { TestimonialsSection } from '@/features/components/home/TestimonialSecti
  * busca. Título e descrição reaproveitam a copy já aprovada pelo cliente.
  */
 export const metadata: Metadata = {
-  title: 'Cursos de Surf Online | T4 Surf',
+  // Sem "| T4 Surf": o template do layout já acrescenta o sufixo da marca.
+  title: 'Cursos de Surf Online',
   description:
     'Aprenda a surfar do zero ao avançado. O método completo mais prático, rápido e seguro para você dominar o surf de verdade.',
 };

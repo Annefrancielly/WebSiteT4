@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { TripSection } from "@/features/components/sections/TripSection";
 import { TripMemoriesCarousel } from "@/features/components/sections/TripMemoriesCarousel";
 import { Badge } from "@/features/components/ui/badge";
@@ -17,6 +18,12 @@ import reservaJson from "@/constants/surf-trips-fallback.json";
  *     | python3 -m json.tool > src/constants/surf-trips-fallback.json
  */
 const TRIPS_DE_RESERVA: SurfTripDto[] = reservaJson;
+
+export const metadata: Metadata = {
+  title: "Surf Trips",
+  description:
+    "Viagens de surf com coaching técnico e grupos pequenos. Veja os próximos destinos, datas e o que está incluso em cada trip.",
+};
 
 /**
  * Esta página é gerada em tempo de build (output: "export"). O que for

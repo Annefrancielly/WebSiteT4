@@ -36,9 +36,24 @@ const fontDisplay = Saira_Condensed({
   display: "swap",
 });
 
+/**
+ * Metadata raiz.
+ *
+ * O `template` faz cada página declarar só a sua parte do título e receber o
+ * sufixo da marca automaticamente. Sem ele, página nova nasce herdando o título
+ * genérico — foi o que aconteceu com Home, FAQ, Surf Trips e Agendar Aula, que
+ * ficaram todas com o mesmo <title> nos resultados de busca.
+ *
+ * `metadataBase` permite Open Graph e canonical com caminho relativo.
+ */
 export const metadata: Metadata = {
-  title: "T4 Surf | Metodologia Comprovada",
-  description: "Aprenda a surfar com segurança e evolução rápida.",
+  metadataBase: new URL("https://t4surf.com.br"),
+  title: {
+    default: "T4 Surf | Aprenda a Surfar do Zero ao Avançado",
+    template: "%s | T4 Surf",
+  },
+  description:
+    "Em 3 meses o que você levaria 3 anos para aprender sozinho. Cursos de surf online com o Método T4, do iniciante ao avançado.",
 };
 
 export default function RootLayout({
