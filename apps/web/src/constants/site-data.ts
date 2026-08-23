@@ -142,6 +142,69 @@ export const FAQ_DATA = [
   }
 ];
 
+/**
+ * FAQ da Home — dúvidas que travam a COMPRA.
+ *
+ * Convive de propósito com o FAQ_DATA acima, e a separação não é duplicação:
+ * são dois públicos em dois momentos.
+ *
+ *   FAQ_DATA        página /faq. Suporte e operação: como recebo o acesso,
+ *                   posso remarcar aula, quais equipamentos. Quem lê já
+ *                   comprou, ou está prestes a.
+ *
+ *   FAQ_DECISAO     Home, logo antes do último CTA. Só as objeções que fazem
+ *                   alguém FECHAR A PÁGINA: qual curso é o meu, funciona por
+ *                   vídeo, e se eu errar a escolha.
+ *
+ * Misturar os dois é o erro clássico de FAQ: uma lista de vinte perguntas em
+ * que a dúvida que impedia a compra fica em décimo quarto lugar, depois de
+ * "quais equipamentos vocês fornecem".
+ */
+export type PerguntaFrequente = {
+  id: string;
+  pergunta: string;
+  resposta: string;
+};
+
+export const FAQ_DECISAO: PerguntaFrequente[] = [
+  {
+    id: "qual-curso-iniciante",
+    pergunta: "Nunca surfei. Qual curso eu escolho?",
+    resposta:
+      "O Aprendendo a Surfar do Zero. Ele parte do absoluto zero — base na prancha, escolha do equipamento, remada e o drop passo a passo. Não existe pré-requisito nenhum.",
+  },
+  {
+    id: "evolucao-ou-progressivo",
+    pergunta: "Já pego ondas. É o Evolução ou o Progressivo?",
+    resposta:
+      "Se você pega a onda mas perde a parede, entra atrasado ou não gera velocidade, é o Evolução. Se você já corre a onda com velocidade e o que falta é executar manobra — cavada, rasgada, cutback — é o Progressivo.",
+  },
+  {
+    id: "aprender-por-video",
+    pergunta: "Dá para aprender surf de verdade por vídeo?",
+    resposta:
+      "Boa parte do que trava a evolução acontece antes de entrar na água — leitura de mar, posicionamento, o movimento do pop-up. Isso se aprende melhor em vídeo, revendo quantas vezes precisar, do que numa aula em que a onda não espera.",
+  },
+  {
+    id: "curso-errado",
+    pergunta: "E se eu comprar o curso errado?",
+    resposta:
+      "Você tem 7 dias de garantia. Se não for para o seu momento, devolvemos o valor integral — é o seu direito por lei e nós fazemos questão de deixar claro.",
+  },
+  {
+    id: "prancha-propria",
+    pergunta: "Preciso ter prancha própria?",
+    resposta:
+      "Não para começar. E o curso Do Zero tem uma aula inteira sobre como escolher a prancha ideal, para você não gastar errado na primeira compra.",
+  },
+  {
+    id: "mais-de-um-curso",
+    pergunta: "Posso comprar mais de um curso?",
+    resposta:
+      "Pode. E vale conversar antes: dependendo do seu momento, faz mais sentido começar por um e avançar para o próximo. Chame no WhatsApp que eu te oriento.",
+  },
+];
+
 export const CURSOS_CONVERSAO_KIWIFY_URL = "https://pay.kiwify.com.br/inoxL34";
 
 export const PROFESSOR_TRAJETORIA_YOUTUBE_URL = "https://youtu.be/GI9on9VKkOA";

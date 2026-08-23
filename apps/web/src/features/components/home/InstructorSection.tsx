@@ -46,7 +46,7 @@ const CREDENCIAIS = [
  */
 export function InstructorSection() {
   return (
-    <DarkSection id="sobre" ariaLabelledBy="sobre-title" tone="base">
+    <DarkSection id="sobre" ariaLabelledBy="sobre-title" tone="soft">
       <Reveal>
         <p className="text-center font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
           Autoridade

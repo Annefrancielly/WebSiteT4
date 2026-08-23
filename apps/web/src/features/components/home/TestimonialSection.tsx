@@ -169,7 +169,7 @@ export function TestimonialsSection() {
     <DarkSection
       id="resultados"
       ariaLabelledBy="resultados-title"
-      tone="soft"
+      tone="base"
       className="scroll-mt-24"
     >
       <Reveal>

@@ -4,11 +4,12 @@ import { MethodVideoSection } from "@/features/components/home/MethodVideoSectio
 import { CommonMistakesSection } from "@/features/components/home/CommonMistakesSection";
 import { LevelSelector } from "@/features/components/home/LevelSelector";
 import { CoursesShowcase } from "@/features/components/courses/CoursesShowcase";
-import { MobileBuyBar } from "@/features/components/home/MobileBuyBar";
-import { PlansSection } from "@/features/components/home/PlansSection";
-import { InstructorSection } from "@/features/components/home/InstructorSection";
 import { TestimonialsSection } from "@/features/components/home/TestimonialSection";
+import { InstructorSection } from "@/features/components/home/InstructorSection";
+import { PlansSection } from "@/features/components/home/PlansSection";
 import { FaqContactSection } from "@/features/components/home/FaqContactSection";
+import { FinalCtaSection } from "@/features/components/home/FinalCtaSection";
+import { MobileBuyBar } from "@/features/components/home/MobileBuyBar";
 
 /**
  * Home.
@@ -16,25 +17,35 @@ import { FaqContactSection } from "@/features/components/home/FaqContactSection"
  * A ordem das seções é a própria sequência da decisão de compra, e cada passo
  * responde à objeção que o passo anterior levanta:
  *
- *   Hero                 a promessa: 3 meses no lugar de 3 anos
- *      ↓                 "será que é verdade?"
- *   StatsStrip           os números
- *      ↓                 "por que comigo seria diferente?"
- *   MethodVideoSection   o Ricardo explicando
- *      ↓                 "e qual é o meu caso?"
+ *   HeroSection            a promessa: 3 meses no lugar de 3 anos
+ *      ↓                   "será que é verdade?"
+ *   StatsStrip             os números
+ *      ↓                   "por que comigo seria diferente?"
+ *   MethodVideoSection     o Ricardo explicando
+ *      ↓                   "e qual é o meu caso?"
  *   CommonMistakesSection  os 4 erros — o visitante reconhece o dele
- *      ↓                 "então qual curso é o meu?"
- *   LevelSelector        ele declara a situação
+ *      ↓                   "então qual curso é o meu?"
+ *   LevelSelector          ele declara a situação
  *      ↓
- *   CoursesShowcase      a oferta
+ *   CoursesShowcase        a oferta
+ *      ↓                   "funciona mesmo?"
+ *   TestimonialsSection    alunos gravados antes e depois
+ *      ↓                   "e quem é essa pessoa para me ensinar?"
+ *   InstructorSection      a autoridade
+ *      ↓
+ *   PlansSection           aulas presenciais, para quem mora perto
+ *      ↓                   "ainda tenho uma dúvida"
+ *   FaqContactSection      as seis objeções que travam a compra
+ *      ↓
+ *   FinalCtaSection        o último convite
  *
  * Nenhuma dessas posições é decorativa. Trocar duas de lugar quebra a cadeia:
  * o Método antes dos números pede fé sem prova; o seletor antes dos erros pede
- * uma decisão de quem ainda não sabe qual é o problema dele; e a vitrine antes
- * do seletor torna o atalho inútil, porque o visitante já percorreu os cards.
+ * decisão de quem ainda não sabe qual é o problema dele; a prova antes da
+ * oferta prova algo que o visitante ainda não sabe que quer; e o FAQ depois do
+ * último CTA responde uma dúvida que já fez a pessoa ir embora.
  *
- * Da PlansSection para baixo ainda é o site antigo. A costura entre o bloco
- * escuro e o creme é o limite exato de até onde a refatoração chegou.
+ * A PlansSection ainda é a antiga, em creme — é a última costura visível.
  */
 export default function Home() {
   return (
@@ -54,11 +65,15 @@ export default function Home() {
 
       <CoursesShowcase id="cursos" />
 
-      <PlansSection />
+      <TestimonialsSection />
 
       <InstructorSection />
-      <TestimonialsSection />
+
+      <PlansSection />
+
       <FaqContactSection />
+
+      <FinalCtaSection />
 
       {/*
         Fica por último no JSX porque é sobreposição, não conteúdo: assim ela é

@@ -127,4 +127,12 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-bold text-brand-dark;
   }
+
+  /* O FAQ da Home usa <details>/<summary> nativo, sem JavaScript. O Safari
+     desenha um triangulinho proprio antes do texto e ignora `list-style`;
+     so este seletor o remove. Sem ele, a pergunta ficaria com uma seta do
+     sistema competindo com o icone da propria interface. */
+  summary::-webkit-details-marker {
+    display: none;
+  }
 }

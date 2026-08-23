@@ -1,55 +1,104 @@
-import { MessageCircle } from "lucide-react";
-import { Button } from "@/features/components/ui/button";
-import { Badge } from "@/features/components/ui/badge";
+import { Plus } from "lucide-react";
 
+import { criarUrlWhatsApp, FAQ_DECISAO } from "@/constants/site-data";
+import { DarkSection } from "@/features/components/shared/DarkSection";
+import { Reveal } from "@/features/components/shared/Reveal";
+
+const MENSAGEM_DUVIDA =
+  "Olá! Vim pelo site da T4 Surf e fiquei com uma dúvida sobre os cursos.";
+
+/**
+ * FAQ da Home: as objeções que impedem a compra.
+ *
+ * Vem imediatamente antes do último CTA, e essa posição é a razão de a seção
+ * existir. Quem chegou até aqui já viu preço, conteúdo e prova — se ainda não
+ * comprou, é porque sobrou uma dúvida. As seis perguntas são exatamente as seis
+ * dúvidas que sobram.
+ *
+ * SOBRE O ACORDEÃO: usa <details>/<summary> nativo do navegador, e não o
+ * componente Accordion do Shadcn que existe no projeto.
+ *
+ * A troca é deliberada. O Accordion do Radix é excelente, mas obrigaria esta
+ * seção a virar Client Component — ou seja, mandar JavaScript ao navegador para
+ * abrir e fechar um texto, que é o que o <details> faz desde sempre, de graça,
+ * com acessibilidade e busca do Ctrl+F inclusas.
+ *
+ * O Accordion continuaria sendo a escolha certa se precisássemos do que o
+ * nativo não faz: fechar um item ao abrir outro, animar a altura com precisão,
+ * controlar o estado de fora. Nada disso é necessário aqui — e é o tipo de
+ * decisão que separa "usar a biblioteca" de "usar a plataforma".
+ */
 export function FaqContactSection() {
   return (
-    <section className="py-24 bg-brand-beige">
-      <div className="container px-4 mx-auto text-center">
-        <Badge className="bg-green-100 text-green-700 hover:bg-green-200 border-none mb-6 px-4 py-1">
-          Fale Conosco
-        </Badge>
-
-        <h2 className="text-3xl md:text-5xl font-black text-brand-black mb-4">
-          Tire Suas Dúvidas Agora!
-        </h2>
-        <p className="text-gray-600 mb-12 max-w-xl mx-auto">
-          Entre em contato direto pelo WhatsApp e receba atendimento
-          personalizado da nossa equipe.
+    <DarkSection id="faq" ariaLabelledBy="faq-title" tone="base">
+      <Reveal>
+        <p className="text-center font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
+          Dúvidas
         </p>
+      </Reveal>
 
-        {/* Card Branco Central */}
-        <div className="bg-white max-w-lg mx-auto rounded-3xl p-10 shadow-xl border border-gray-100">
-          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/30">
-            <MessageCircle className="w-8 h-8 text-white fill-white" />
-          </div>
+      <Reveal index={1}>
+        <h2
+          id="faq-title"
+          className="mt-4 text-center font-display text-4xl uppercase leading-none tracking-tight md:text-5xl lg:text-6xl"
+        >
+          Antes de decidir
+        </h2>
+      </Reveal>
 
-          <h3 className="text-2xl font-bold text-brand-black mb-2">WhatsApp</h3>
-          <p className="text-gray-500 text-sm mb-8">
-            Atendimento rápido e personalizado
-          </p>
-
-          <Button
-            className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold h-14 text-lg rounded-xl shadow-lg transition-transform hover:scale-105"
-            asChild
-          >
-            <a
-              href="https://wa.me/+5579988330770"
-              target="_blank"
-              rel="noopener noreferrer"
+      <div className="mx-auto mt-11 max-w-3xl">
+        {FAQ_DECISAO.map((item, indice) => (
+          <Reveal key={item.id} index={indice + 2}>
+            <details
+              /*
+                A primeira pergunta nasce aberta. Não é enfeite: um acordeão
+                todo fechado parece uma lista de títulos, e muita gente não
+                descobre que aquilo abre. Com um item aberto o padrão fica
+                evidente — e a pergunta que abre é justamente a mais comum.
+              */
+              open={indice === 0}
+              className="group border-b border-white/10"
             >
-              Chamar no WhatsApp
-            </a>
-          </Button>
-        </div>
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-display text-lg uppercase leading-tight text-white transition-colors hover:text-brand-orange md:text-xl">
+                {item.pergunta}
 
-        <div className="mt-12 text-sm text-brand-orange font-bold uppercase tracking-wide">
-          Horário de Atendimento:
-          <span className="block text-gray-500 font-medium normal-case mt-1">
-            Segunda a Sexta: 9h às 18h | Sábados: 9h às 13h
-          </span>
-        </div>
+                {/*
+                  Um ícone só, girando 45° ao abrir: o "+" vira "×". Uma peça em
+                  vez de duas evita o salto que acontece quando um ícone é
+                  trocado por outro de largura diferente.
+                */}
+                <Plus
+                  aria-hidden="true"
+                  className="size-5 shrink-0 text-brand-orange transition-transform duration-300 group-open:rotate-45"
+                />
+              </summary>
+
+              <div className="pb-5 pr-9 text-[15px] leading-relaxed text-brand-ink-muted">
+                {item.resposta}
+              </div>
+            </details>
+          </Reveal>
+        ))}
       </div>
-    </section>
+
+      <Reveal index={FAQ_DECISAO.length + 2}>
+        {/*
+          A saída para quem tem uma dúvida que não está na lista. Sem ela, o
+          visitante indeciso não tem para onde ir a não ser para trás — e a
+          conversa no WhatsApp é onde o Ricardo fecha venda.
+        */}
+        <p className="mt-10 text-center text-brand-ink-text">
+          Tem outra dúvida?{" "}
+          <a
+            href={criarUrlWhatsApp(MENSAGEM_DUVIDA)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-brand-orange underline-offset-4 hover:underline"
+          >
+            Fala comigo no WhatsApp
+          </a>
+        </p>
+      </Reveal>
+    </DarkSection>
   );
 }
