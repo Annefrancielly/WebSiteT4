@@ -67,6 +67,21 @@ export default function RootLayout({
       className={`${fontSans.variable} ${fontDisplay.variable} scroll-smooth`}
     >
       <body className="font-sans bg-brand-beige text-brand-black antialiased">
+        {/*
+          Rede de segurança da animação de entrada.
+
+          O componente Reveal entrega o conteúdo transparente e o revela por
+          JavaScript. Sem script — extensão bloqueando, rede caindo no meio do
+          bundle, navegador antigo — o texto continuaria no HTML, porém
+          invisível: uma página comercial em branco.
+
+          Estas duas linhas devolvem tudo à vista nesse cenário. Custam zero
+          para quem tem JavaScript: o navegador nem lê o conteúdo de <noscript>.
+        */}
+        <noscript>
+          <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
