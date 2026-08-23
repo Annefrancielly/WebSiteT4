@@ -205,6 +205,20 @@ export const FAQ_DECISAO: PerguntaFrequente[] = [
   },
 ];
 
+/**
+ * Menor valor das aulas presenciais, em CENTAVOS.
+ *
+ * DÉBITO CONHECIDO: a tabela completa de planos ainda vive dentro de
+ * PlansSection.tsx, em um array não exportado e com preço em string. Este
+ * valor precisa concordar com o menor preço de lá.
+ *
+ * Está aqui porque a faixa "Mora em Aracaju?" da Home precisa do "a partir de"
+ * sem importar a seção inteira de planos. Quando PlansSection for refatorada,
+ * a tabela deve subir para cá e esta constante passa a ser derivada dela, como
+ * já acontece com os cursos online.
+ */
+export const AULAS_PRESENCIAIS_A_PARTIR_DE_CENTAVOS = 55_000;
+
 export const CURSOS_CONVERSAO_KIWIFY_URL = "https://pay.kiwify.com.br/inoxL34";
 
 export const PROFESSOR_TRAJETORIA_YOUTUBE_URL = "https://youtu.be/GI9on9VKkOA";

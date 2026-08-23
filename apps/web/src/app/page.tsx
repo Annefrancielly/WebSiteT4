@@ -6,7 +6,7 @@ import { LevelSelector } from "@/features/components/home/LevelSelector";
 import { CoursesShowcase } from "@/features/components/courses/CoursesShowcase";
 import { TestimonialsSection } from "@/features/components/home/TestimonialSection";
 import { InstructorSection } from "@/features/components/home/InstructorSection";
-import { PlansSection } from "@/features/components/home/PlansSection";
+import { InPersonBand } from "@/features/components/home/InPersonBand";
 import { FaqContactSection } from "@/features/components/home/FaqContactSection";
 import { FinalCtaSection } from "@/features/components/home/FinalCtaSection";
 import { MobileBuyBar } from "@/features/components/home/MobileBuyBar";
@@ -33,7 +33,7 @@ import { MobileBuyBar } from "@/features/components/home/MobileBuyBar";
  *      ↓                   "e quem é essa pessoa para me ensinar?"
  *   InstructorSection      a autoridade
  *      ↓
- *   PlansSection           aulas presenciais, para quem mora perto
+ *   InPersonBand           aulas presenciais, para quem mora em Aracaju
  *      ↓                   "ainda tenho uma dúvida"
  *   FaqContactSection      as seis objeções que travam a compra
  *      ↓
@@ -44,8 +44,6 @@ import { MobileBuyBar } from "@/features/components/home/MobileBuyBar";
  * decisão de quem ainda não sabe qual é o problema dele; a prova antes da
  * oferta prova algo que o visitante ainda não sabe que quer; e o FAQ depois do
  * último CTA responde uma dúvida que já fez a pessoa ir embora.
- *
- * A PlansSection ainda é a antiga, em creme — é a última costura visível.
  */
 export default function Home() {
   return (
@@ -69,7 +67,7 @@ export default function Home() {
 
       <InstructorSection />
 
-      <PlansSection />
+      <InPersonBand />
 
       <FaqContactSection />
 
