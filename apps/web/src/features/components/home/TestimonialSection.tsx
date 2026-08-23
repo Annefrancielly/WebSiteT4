@@ -1,13 +1,18 @@
-'use client';
+import Image from "next/image";
+import { Play, Star } from "lucide-react";
 
-import * as React from 'react';
-import Image from 'next/image';
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/features/components/ui/button';
-import { Badge } from '@/features/components/ui/badge';
-//import { RelatosVideoDialog } from "../shared/RelatosVideoDialog";
-//import { RELATOS_YOUTUBE_URL } from "@/constants/site-data";
-import { withBasePath } from '@/lib/paths';
+import {
+  DEPOIMENTOS_EM_VIDEO,
+  GOOGLE_AVALIACOES,
+  GOOGLE_AVALIACOES_URL,
+  GOOGLE_NOTA,
+  type DepoimentoEmVideo,
+} from "@/constants/site-data";
+import { DarkSection } from "@/features/components/shared/DarkSection";
+import { RelatosVideoDialog } from "@/features/components/shared/RelatosVideoDialog";
+import { Reveal } from "@/features/components/shared/Reveal";
+import { withBasePath } from "@/lib/paths";
+import { cn } from "@/lib/utils";
 
 type WhatsAppFeedback = {
   id: number;
@@ -23,39 +28,42 @@ const WHATSAPP_FEEDBACKS: WhatsAppFeedback[] = [
     src: withBasePath("/feedback/whatsapp-0101.jpg"),
     alt: "Print de feedback de aluno no WhatsApp sobre evolução no surf",
     senderName: "Fred",
-    caption: "Feedback real (WhatsApp)",
+    caption: "WhatsApp",
   },
   {
     id: 2,
     src: withBasePath("/feedback/whatsapp-0202.jpg"),
     alt: "Print de depoimento no WhatsApp sobre aulas e metodologia",
     senderName: "Leonardo",
-    caption: "Feedback real (WhatsApp)",
+    caption: "WhatsApp",
   },
   {
     id: 3,
     src: withBasePath("/feedback/relato4.jpg"),
     alt: "Print de conversa no WhatsApp elogiando a evolução nas aulas",
     senderName: "Haniel",
-    caption: "Feedback real (WhatsApp)",
+    caption: "WhatsApp",
   },
   {
     id: 4,
     src: withBasePath("/feedback/Relato3.jpg"),
     alt: "Print de avaliação de aluno no WhatsApp sobre experiência nas aulas",
     senderName: "Seichele Barbosa",
-    caption: "Feedback real (Instagram)",
+    caption: "Instagram",
   },
 ];
 
+const TAG_ANTES_E_DEPOIS = "Primeira aula → 3 meses";
+
+/** Logotipo do Google em SVG inline: some do bundle e some da lista de requisições. */
 function GoogleGIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
       viewBox="0 0 48 48"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Google"
-      role="img"
+      aria-hidden="true"
+      focusable="false"
     >
       <path
         fill="#EA4335"
@@ -73,257 +81,291 @@ function GoogleGIcon({ className }: { className?: string }) {
         fill="#34A853"
         d="M24 44c5.32 0 9.79-1.76 13.06-4.79l-7.18-5.58c-1.99 1.34-4.55 2.13-5.88 2.13-6.9 0-12.76-4.6-14.41-10.79l-6.53 5.07C6.84 40.62 14.73 44 24 44z"
       />
-      <path fill="none" d="M1 1h46v46H1z" />
     </svg>
   );
 }
 
-function useSlidesPerViewWhatsapp() {
-  const [slidesPerView, setSlidesPerView] = React.useState(1);
-
-  React.useEffect(() => {
-    const md = window.matchMedia('(min-width: 768px)');
-    const lg = window.matchMedia('(min-width: 1024px)');
-    const xl = window.matchMedia('(min-width: 1280px)');
-
-    const compute = () => {
-      if (xl.matches) return 4;
-      if (lg.matches) return 3;
-      if (md.matches) return 2;
-      return 1;
-    };
-
-    const update = () => setSlidesPerView(compute());
-
-    update();
-    md.addEventListener('change', update);
-    lg.addEventListener('change', update);
-    xl.addEventListener('change', update);
-
-    return () => {
-      md.removeEventListener('change', update);
-      lg.removeEventListener('change', update);
-      xl.removeEventListener('change', update);
-    };
-  }, []);
-
-  return slidesPerView;
-}
-
-function WhatsappFeedbackCarousel({ items }: { items: WhatsAppFeedback[] }) {
-  const slidesPerView = useSlidesPerViewWhatsapp();
-  const [startIndex, setStartIndex] = React.useState(0);
-
-  const maxStart = React.useMemo(
-    () => Math.max(0, items.length - slidesPerView),
-    [items.length, slidesPerView],
-  );
-
-  React.useEffect(() => {
-    setStartIndex((prev) => Math.min(prev, maxStart));
-  }, [maxStart]);
-
-  const pageStarts = React.useMemo(() => {
-    const starts: number[] = [];
-    for (let i = 0; i <= maxStart; i += slidesPerView) starts.push(i);
-    if (starts.length === 0) starts.push(0);
-    if (starts[starts.length - 1] !== maxStart) starts.push(maxStart);
-    return starts;
-  }, [maxStart, slidesPerView]);
-
-  const currentPage = React.useMemo(() => {
-    const idx = pageStarts.findIndex((v) => v === startIndex);
-    return idx >= 0 ? idx : 0;
-  }, [pageStarts, startIndex]);
-
-  const canPrev = startIndex > 0;
-  const canNext = startIndex < maxStart;
-
-  function prev() {
-    setStartIndex((prev) => Math.max(0, prev - slidesPerView));
-  }
-
-  function next() {
-    setStartIndex((prev) => Math.min(maxStart, prev + slidesPerView));
-  }
-
-  function goToPage(page: number) {
-    const safe = Math.max(0, Math.min(page, pageStarts.length - 1));
-    setStartIndex(pageStarts[safe]);
-  }
-
-  const translatePct = (startIndex * 100) / slidesPerView;
-
+/**
+ * Miolo visual do card: a área do vídeo.
+ *
+ * A proporção 9/13 é quase a de um vídeo vertical de celular — que é como o
+ * Ricardo vai gravar e como o visitante está acostumado a assistir. Fixá-la
+ * garante que os três cards fiquem do mesmo tamanho antes de qualquer mídia
+ * carregar.
+ *
+ * O fundo é um gradiente, não uma imagem: enquanto não houver miniatura, um
+ * degradê pesa zero byte e não parece um espaço quebrado.
+ */
+function AreaDoVideo({ interativo }: { interativo: boolean }) {
   return (
-    <div className="relative">
-      <div className="mb-6 flex items-center justify-end gap-2">
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          className="rounded-full"
-          aria-label="Voltar feedbacks"
-          onClick={prev}
-          disabled={!canPrev}
+    <div className="relative flex aspect-[9/13] items-end bg-[radial-gradient(100%_80%_at_35%_12%,#1a3d4c,transparent_62%),linear-gradient(180deg,#0e1a21,#0a1319)] p-4">
+      <span className="rounded-full bg-black/45 px-2.5 py-1.5 text-[10px] uppercase tracking-[0.13em] text-white/55 backdrop-blur-sm">
+        {TAG_ANTES_E_DEPOIS}
+      </span>
+
+      {interativo ? (
+        <span
+          aria-hidden="true"
+          className="absolute left-1/2 top-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brand-orange/90 text-brand-black transition-transform duration-300 group-hover:scale-110"
         >
-          <ChevronLeft className="h-5 w-5" />
-        </Button>
-
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          className="rounded-full"
-          aria-label="Avançar feedbacks"
-          onClick={next}
-          disabled={!canNext}
-        >
-          <ChevronRight className="h-5 w-5" />
-        </Button>
-      </div>
-
-      <div className="overflow-hidden">
-        <div
-          className="flex transition-transform duration-300 ease-out -mx-3"
-          style={{ transform: `translateX(-${translatePct}%)` }}
-        >
-          {items.map((it) => (
-            <div
-              key={it.id}
-              className="px-3 shrink-0 basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
-            >
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-md hover:shadow-lg transition-all">
-                <div className="w-full aspect-[37/62] rounded-t-2xl bg-zinc-50 p-4">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={it.src}
-                      alt={it.alt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                      className="object-contain"
-                      priority={it.id <= 2}
-                    />
-                  </div>
-                </div>
-
-                <div className="p-4 space-y-1">
-                  <p className="text-sm font-bold text-brand-dark">{it.senderName}</p>
-
-                  {it.caption ? (
-                    <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                      {it.caption}
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-6 flex items-center justify-center gap-2">
-        {pageStarts.map((_, idx) => {
-          const active = idx === currentPage;
-          return (
-            <button
-              key={`dot-${idx}`}
-              type="button"
-              aria-label={`Ir para página ${idx + 1} dos feedbacks`}
-              onClick={() => goToPage(idx)}
-              className={[
-                'h-2.5 rounded-full transition-all',
-                active ? 'w-8 bg-brand-orange' : 'w-2.5 bg-gray-300 hover:bg-gray-400',
-              ].join(' ')}
-            />
-          );
-        })}
-      </div>
+          <Play className="size-5 fill-current" />
+        </span>
+      ) : (
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] uppercase tracking-[0.15em] text-white/30">
+          Em gravação
+        </span>
+      )}
     </div>
   );
 }
 
-export function TestimonialsSection() {
-  const hasWhatsapp = WHATSAPP_FEEDBACKS.length > 0;
-
+/** Rodapé do card: nível, nome e frase do aluno. */
+function LegendaDoCard({ depoimento }: { depoimento: DepoimentoEmVideo }) {
   return (
-    // id="resultados": alvo do link "Resultados" do cabeçalho novo.
-    // scroll-mt-24 compensa a altura do header fixo — sem ele a âncora para
-    // com o título da seção escondido atrás da barra.
-    <section
+    <div className="p-5 text-left">
+      <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-brand-orange">
+        {depoimento.nivel}
+      </p>
+
+      {depoimento.nome ? (
+        <p className="mt-2 text-[17px] font-semibold text-white">
+          {depoimento.nome}
+        </p>
+      ) : (
+        <p className="mt-2 text-[17px] font-semibold text-white/35">
+          Depoimento em breve
+        </p>
+      )}
+
+      {depoimento.frase ? (
+        <p className="mt-2 text-sm leading-relaxed text-brand-ink-muted">
+          “{depoimento.frase}”
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/**
+ * Depoimentos — "3 meses. Veja você mesmo."
+ *
+ * Esta é a seção mais importante da página depois da vitrine, e a razão é o
+ * formato: no surf o resultado PODE SER FILMADO. Cada aluno gravado na primeira
+ * aula e três meses depois, no mesmo pico. Ninguém precisa acreditar em
+ * adjetivo — é só assistir.
+ *
+ * É também a única prova que responde à promessa do Hero na mesma unidade em
+ * que ela foi feita. O Hero promete três meses; aqui estão os três meses.
+ *
+ * Server Component: os cards são markup estático e só o diálogo do vídeo, que
+ * já era client, roda no navegador.
+ *
+ * ESTADO ATUAL: os vídeos ainda não existem. Os cards aparecem em espera, sem
+ * nome e sem frase inventados. Assim que o Ricardo enviar o material, é
+ * preencher DEPOIMENTOS_EM_VIDEO em site-data.ts e a seção se completa sozinha.
+ */
+export function TestimonialsSection() {
+  return (
+    <DarkSection
       id="resultados"
-      className="py-24 bg-[#F2F0EB] relative overflow-hidden scroll-mt-24"
+      ariaLabelledBy="resultados-title"
+      tone="soft"
+      className="scroll-mt-24"
     >
-      <div className="container px-4 mx-auto relative z-10">
-        <div className="text-center mb-16 space-y-4">
-          <Badge className="bg-brand-orange text-white hover:bg-orange-600 px-4 py-1 border-none">
-            Depoimentos
-          </Badge>
-          <h2 className="text-3xl md:text-5xl font-bold text-brand-dark">
-            O Que Nossos Alunos Dizem
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            Histórias reais de transformação e conquistas de quem decidiu embarcar nessa jornada
-            conosco.
-          </p>
-          {/* Botão de relatos em vídeo desativado temporariamente até o cliente disponibilizar o material
-        <div className="mt-8 flex justify-center" data-allow-interaction="true">
-         <RelatosVideoDialog youtubeUrl={RELATOS_YOUTUBE_URL} />
-        </div>
+      <Reveal>
+        <p className="text-center font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
+          A prova
+        </p>
+      </Reveal>
+
+      <Reveal index={1}>
+        {/*
+          Sem `max-w` em ch: era ele que quebrava o título em duas linhas. A
+          frase é curta o bastante para caber inteira até em telas médias, e
+          quebrar "3 meses" de "Veja você mesmo" separava a promessa do convite
+          — que é justamente o que a frase junta.
         */}
-        </div>
-
-        {/* Card Principal de Resumo (clicável para Google Maps) */}
-        <a
-          href="https://share.google/hQkaIPZdSZTFQI7Pv"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Abrir avaliações no Google Maps"
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 max-w-2xl mx-auto mb-16 flex flex-col sm:flex-row items-center justify-center gap-6 hover:shadow-md transition-shadow cursor-pointer"
+        <h2
+          id="resultados-title"
+          className="mt-4 text-center font-display text-4xl uppercase leading-none tracking-tight md:text-5xl lg:text-6xl"
         >
-          <div className="flex items-center justify-center w-14 h-14 bg-white rounded-full shadow-md border border-gray-100 shrink-0">
-            <GoogleGIcon className="h-7 w-7" />
-          </div>
+          3 meses - Veja você mesmo.
+        </h2>
+      </Reveal>
 
-          <div className="text-center sm:text-left">
-            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mb-1">
-              <span className="font-bold text-xl text-brand-dark">T4 Aulas de Surf</span>
-              <div className="flex items-center gap-1 bg-green-50 px-2 py-0.5 rounded border border-green-100">
-                <span className="font-bold text-brand-dark">5.0</span>
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <Star key={s} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-              </div>
+      <Reveal index={2}>
+        <p className="mx-auto mt-6 max-w-[62ch] text-center text-lg leading-relaxed">
+          No surf o resultado pode ser filmado. Cada aluno abaixo foi gravado na
+          primeira aula e três meses depois, no mesmo pico.
+        </p>
+      </Reveal>
+
+      {/*
+        Mesma medida do trilho de prints (max-w-5xl). Um bloco de conteúdo por
+        seção, sempre na mesma largura: é o que faz a página parecer alinhada
+        mesmo quando cada seção tem uma grade diferente.
+
+        Também evita que os cards fiquem enormes: em 1280px sem limite, cada um
+        passaria de 400px de largura e, na proporção 9/13, quase 600px de
+        altura — os três ocupariam a tela inteira sozinhos.
+      */}
+      <div className="mx-auto mt-11 grid max-w-5xl gap-5 md:grid-cols-3">
+        {DEPOIMENTOS_EM_VIDEO.map((depoimento, indice) => {
+          const cartao = (
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-brand-ink-card transition-colors duration-300">
+              <AreaDoVideo interativo={Boolean(depoimento.youtubeUrl)} />
+              <LegendaDoCard depoimento={depoimento} />
             </div>
+          );
 
-            <p className="text-sm text-gray-500">
-              Baseado em <span className="font-bold text-gray-700 underline">34 avaliações</span> no
-              Google Maps
-            </p>
-          </div>
-        </a>
-
-        {hasWhatsapp ? (
-          <div className="mt-16">
-            <div className="text-center mb-10 space-y-3">
-              <Badge className="bg-brand-dark text-white hover:bg-brand-dark/90 px-4 py-1 border-none">
-                Feedbacks no WhatsApp
-              </Badge>
-
-              <h3 className="text-2xl md:text-4xl font-bold text-brand-dark">
-                Prints reais de alunos
-              </h3>
-
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Feedbacks enviados diretamente após as aulas e treinos.
-              </p>
-            </div>
-
-            <WhatsappFeedbackCarousel items={WHATSAPP_FEEDBACKS} />
-          </div>
-        ) : null}
+          return (
+            <Reveal key={depoimento.id} index={indice + 3}>
+              {depoimento.youtubeUrl ? (
+                /*
+                  O card inteiro é o gatilho do vídeo — é um <button>, e não uma
+                  <div> com onClick: assim ele entra na ordem de tabulação,
+                  responde ao Enter e é anunciado como botão. Área de clique
+                  grande é decisão de conversão; ser um botão de verdade é o que
+                  a torna utilizável por todo mundo.
+                */
+                <RelatosVideoDialog
+                  youtubeUrl={depoimento.youtubeUrl}
+                  dialogTitle={`Evolução em 3 meses — nível ${depoimento.nivel}`}
+                  dialogDescription="Gravado na primeira aula e três meses depois, no mesmo pico."
+                  trigger={
+                    <button
+                      type="button"
+                      className="group block w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-orange"
+                      aria-label={`Assistir ao depoimento em vídeo — nível ${depoimento.nivel}`}
+                    >
+                      {cartao}
+                    </button>
+                  }
+                />
+              ) : (
+                cartao
+              )}
+            </Reveal>
+          );
+        })}
       </div>
-    </section>
+
+      {/*
+        As duas provas abaixo são secundárias, mas verificáveis — e é isso que
+        as mantém aqui enquanto os vídeos não existem. A nota do Google o
+        visitante confere na fonte; os prints são material real que a T4 já
+        publica hoje.
+
+        Quando os vídeos entrarem, esta parte pode encolher ou sair: são duas
+        remoções isoladas, sem tocar no resto da seção.
+      */}
+      <Reveal index={6}>
+        <div className="mt-16 flex justify-center border-t border-white/10 pt-10">
+          <a
+            href={GOOGLE_AVALIACOES_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-wrap items-center gap-4 rounded-2xl border border-white/10 bg-brand-ink-card px-6 py-5 transition-colors duration-300 hover:border-white/25"
+          >
+            <span className="grid size-12 shrink-0 place-items-center rounded-full bg-white">
+              <GoogleGIcon className="size-6" />
+            </span>
+
+            <span>
+              <span className="flex items-center gap-2">
+                <span className="font-display text-2xl uppercase leading-none text-white">
+                  {GOOGLE_NOTA.toFixed(1).replace(".", ",")}
+                </span>
+
+                <span className="flex" aria-hidden="true">
+                  {[1, 2, 3, 4, 5].map((estrela) => (
+                    <Star
+                      key={estrela}
+                      className="size-4 fill-brand-orange text-brand-orange"
+                    />
+                  ))}
+                </span>
+              </span>
+
+              <span className="mt-1 block text-sm text-brand-ink-muted">
+                {GOOGLE_AVALIACOES} avaliações no Google — T4 Aulas de Surf
+              </span>
+            </span>
+          </a>
+        </div>
+      </Reveal>
+
+      <Reveal index={7}>
+        <p className="mt-10 text-center text-[10px] font-bold uppercase tracking-[0.15em] text-brand-ink-muted">
+          Mensagens de alunos, sem edição
+        </p>
+      </Reveal>
+
+      {/*
+        O trilho precisa de DUAS coisas para ficar centralizado, e é por isso
+        que ele tem um invólucro:
+
+        1. `mx-auto max-w-5xl` no invólucro centraliza a faixa dentro da seção.
+           Sem ele, quatro prints estreitos num container de 1280px ficavam
+           encostados à esquerda com um vão à direita.
+
+        2. `lg:justify-center` no trilho centraliza os cards quando eles cabem
+           todos. Só a partir de lg, e a razão é uma armadilha conhecida: com
+           `justify-center` em um flex que TRANSBORDA, o navegador corta o
+           início do conteúdo e o primeiro item fica inalcançável pela rolagem.
+           Abaixo de lg o trilho transborda de propósito, então ali ele
+           permanece alinhado à esquerda.
+      */}
+      <div className="mx-auto mt-4 w-full max-w-5xl">
+        <div
+          role="region"
+          aria-label="Feedbacks de alunos"
+          tabIndex={0}
+          className={cn(
+            "flex gap-4",
+            "-mx-4 snap-x snap-mandatory overflow-x-auto px-4 pb-4",
+            "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            "md:mx-0 md:px-0",
+            "lg:justify-center",
+          )}
+        >
+          {WHATSAPP_FEEDBACKS.map((feedback, indice) => (
+            <Reveal
+              key={feedback.id}
+              index={indice + 8}
+              className="w-[62%] shrink-0 snap-center sm:w-[38%] lg:w-[calc(25%-0.75rem)]"
+            >
+              <figure className="h-full overflow-hidden rounded-2xl border border-white/10 bg-brand-ink-card">
+                {/*
+                  object-contain, e não cover: cortar um print corta justamente
+                  a frase que o aluno escreveu.
+                */}
+                <div className="aspect-[37/62] w-full bg-white/[0.04] p-3">
+                  <div className="relative h-full w-full">
+                    <Image
+                      src={feedback.src}
+                      alt={feedback.alt}
+                      fill
+                      sizes="(max-width: 640px) 62vw, (max-width: 1024px) 38vw, 240px"
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+
+                <figcaption className="border-t border-white/10 px-4 py-3">
+                  <p className="text-sm font-semibold text-white">
+                    {feedback.senderName}
+                  </p>
+
+                  <p className="mt-0.5 text-[11px] uppercase tracking-wide text-brand-ink-muted">
+                    {feedback.caption}
+                  </p>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </DarkSection>
   );
 }

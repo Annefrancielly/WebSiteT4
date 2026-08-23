@@ -46,9 +46,9 @@ const CREDENCIAIS = [
  */
 export function InstructorSection() {
   return (
-    <DarkSection id="sobre" ariaLabelledBy="sobre-title" tone="soft">
+    <DarkSection id="sobre" ariaLabelledBy="sobre-title" tone="base">
       <Reveal>
-        <p className="font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
+        <p className="text-center font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
           Autoridade
         </p>
       </Reveal>
@@ -56,7 +56,7 @@ export function InstructorSection() {
       <Reveal index={1}>
         <h2
           id="sobre-title"
-          className="mt-4 max-w-[14ch] font-display text-4xl uppercase leading-none tracking-tight md:text-5xl lg:text-6xl"
+          className="mx-auto mt-4 max-w-[14ch] text-center font-display text-4xl uppercase leading-none tracking-tight md:text-5xl lg:text-6xl"
         >
           Quem vai guiar sua evolução?
         </h2>

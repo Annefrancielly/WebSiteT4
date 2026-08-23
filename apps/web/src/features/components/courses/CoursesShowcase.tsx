@@ -50,7 +50,7 @@ export function CoursesShowcase({
       )}
     >
       <div className="container mx-auto px-4">
-        <div className="mb-10 md:mb-12">
+        <div className="mb-10 text-center md:mb-12">
           <p className="font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
             {eyebrow}
           </p>
@@ -62,7 +62,7 @@ export function CoursesShowcase({
             {title}
           </h2>
 
-          <p className="mt-4 max-w-[55ch] text-lg">
+          <p className="mx-auto mt-4 max-w-[55ch] text-lg">
             Cada um resolve um problema específico. Escolha o seu momento acima
             e eu destaco o certo.
           </p>

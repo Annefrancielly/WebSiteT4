@@ -35,7 +35,7 @@ export function MethodVideoSection() {
   return (
     <DarkSection id="metodo" ariaLabelledBy="metodo-title" tone="base">
       <Reveal>
-        <p className="font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
+        <p className="text-center font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
           O Método T4
         </p>
       </Reveal>
@@ -43,14 +43,14 @@ export function MethodVideoSection() {
       <Reveal index={1}>
         <h2
           id="metodo-title"
-          className="mt-4 max-w-[20ch] font-display text-4xl uppercase leading-none tracking-tight md:text-5xl lg:text-6xl"
+          className="mx-auto mt-4 max-w-[20ch] text-center font-display text-4xl uppercase leading-none tracking-tight md:text-5xl lg:text-6xl"
         >
           Por que uns levam 3 anos e outros levam 3 meses?
         </h2>
       </Reveal>
 
       <Reveal index={2}>
-        <p className="mt-6 max-w-[60ch] text-lg leading-relaxed">
+        <p className="mx-auto mt-6 max-w-[60ch] text-center text-lg leading-relaxed">
           Não é falta de tempo na água. Muita gente surfa todo fim de semana
           durante anos e continua no mesmo lugar.
         </p>
@@ -64,7 +64,7 @@ export function MethodVideoSection() {
             é o layout shift que derruba o CLS e, pior, faz o visitante clicar
             no lugar errado.
           */}
-          <div className="mt-10 aspect-video w-full max-w-4xl overflow-hidden rounded-3xl bg-black shadow-[0_2px_6px_rgba(0,0,0,0.4),0_24px_60px_-18px_rgba(0,0,0,0.7)]">
+          <div className="mx-auto mt-10 aspect-video w-full max-w-4xl overflow-hidden rounded-3xl bg-black shadow-[0_2px_6px_rgba(0,0,0,0.4),0_24px_60px_-18px_rgba(0,0,0,0.7)]">
             <iframe
               className="h-full w-full"
               src={urlDoEmbed}

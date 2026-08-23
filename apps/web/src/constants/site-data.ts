@@ -199,6 +199,65 @@ export type ProvaSocial = {
 export const INSTAGRAM_URL = "https://www.instagram.com/t4_surf/";
 
 /**
+ * Ficha da T4 no Google.
+ *
+ * Nota e quantidade de avaliações confirmadas pelo Ricardo em 23/08.
+ *
+ * São constantes, e não números escritos nos componentes, porque aparecem em
+ * DOIS lugares — a faixa de prova social e a seção de depoimentos. Era
+ * exatamente esse tipo de duplicação que mantinha "34 avaliações" na página
+ * enquanto o número real já era outro.
+ */
+export const GOOGLE_NOTA = 5;
+export const GOOGLE_AVALIACOES = 35;
+export const GOOGLE_AVALIACOES_URL = "https://share.google/hQkaIPZdSZTFQI7Pv";
+
+/**
+ * Depoimentos em vídeo — a prova central da seção "Resultados".
+ *
+ * A ideia é a do protótipo aprovado: cada aluno gravado na PRIMEIRA AULA e
+ * TRÊS MESES DEPOIS, no mesmo pico. É a prova mais forte que este produto pode
+ * ter, porque no surf o resultado é filmável: ninguém precisa acreditar em
+ * adjetivo nenhum, é só assistir.
+ *
+ * AGUARDANDO MATERIAL. O Ricardo vai gravar e enviar. Para publicar um
+ * depoimento basta preencher as quatro informações da entrada correspondente;
+ * enquanto `youtubeUrl` estiver vazio o card aparece em estado de espera, sem
+ * play e sem texto inventado.
+ *
+ * `nome` e `frase` ficam VAZIOS de propósito. Frase entre aspas atribuída a um
+ * aluno real precisa ter saído da boca dele — inventar depoimento é o tipo de
+ * coisa que a T4 não faz, e que nós também não.
+ *
+ * Um nível por card, cobrindo os três cursos: quem se reconheceu no seletor
+ * encontra aqui alguém que estava no mesmo lugar.
+ */
+export type DepoimentoEmVideo = {
+  id: string;
+
+  /** Momento em que o aluno começou. Casa com os níveis dos cursos. */
+  nivel: "Iniciante" | "Intermediário" | "Avançado";
+
+  nome: string;
+  frase: string;
+
+  /** Vazio enquanto o vídeo não existir. Aceita youtu.be ou youtube.com/watch. */
+  youtubeUrl: string;
+};
+
+export const DEPOIMENTOS_EM_VIDEO: DepoimentoEmVideo[] = [
+  { id: "iniciante", nivel: "Iniciante", nome: "", frase: "", youtubeUrl: "" },
+  {
+    id: "intermediario",
+    nivel: "Intermediário",
+    nome: "",
+    frase: "",
+    youtubeUrl: "",
+  },
+  { id: "avancado", nivel: "Avançado", nome: "", frase: "", youtubeUrl: "" },
+];
+
+/**
  * Frase de assinatura do Ricardo na seção de autoridade.
  *
  * PLACEHOLDER APROVADO. Esta redação é minha, não dele — ele aprovou o
@@ -214,8 +273,8 @@ export const PROFESSOR_FRASE =
   "A maioria trava porque tenta aprender no mar o que deveria ter aprendido na areia.";
 
 export const PROVAS_SOCIAIS: ProvaSocial[] = [
-  { valor: 5, casasDecimais: 1, sufixo: "★", rotulo: "nota no Google" },
-  { valor: 35, rotulo: "avaliações" },
+  { valor: GOOGLE_NOTA, casasDecimais: 1, sufixo: "★", rotulo: "nota no Google" },
+  { valor: GOOGLE_AVALIACOES, rotulo: "avaliações" },
   { valor: 500, sufixo: "+", rotulo: "alunos formados" },
   { valor: 5, sufixo: "+", rotulo: "anos ensinando" },
 ];

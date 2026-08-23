@@ -29,6 +29,20 @@ type RelatosVideoDialogProps = {
    * existente muda de aparência.
    */
   triggerClassName?: string;
+
+  /**
+   * Substitui o botão padrão por qualquer elemento que abra o vídeo.
+   *
+   * Existe porque nos depoimentos o gatilho é o card inteiro, e não um botão ao
+   * lado dele. Sem isso, seria preciso um segundo componente de diálogo só para
+   * mudar quem recebe o clique — e dois diálogos de vídeo no projeto acabariam
+   * divergindo em acessibilidade, tamanho e comportamento.
+   *
+   * Precisa ser um elemento focável (um <button>): é ele que o Radix
+   * transforma no gatilho, e um <div> deixaria o vídeo inalcançável por
+   * teclado.
+   */
+  trigger?: React.ReactNode;
 };
 
 function toYouTubeEmbedUrl(input: string) {
@@ -67,6 +81,7 @@ export function RelatosVideoDialog({
   dialogTitle = 'Relatos em vídeo',
   dialogDescription = 'Assista ao vídeo no player abaixo.',
   triggerClassName,
+  trigger,
 }: RelatosVideoDialogProps) {
   const embedBase = React.useMemo(() => toYouTubeEmbedUrl(youtubeUrl), [youtubeUrl]);
 
@@ -77,17 +92,19 @@ export function RelatosVideoDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          type="button"
-          variant="outline"
-          className={cn(
-            'h-12 rounded-full border border-brand-orange/25 bg-brand-orange/10 px-6 font-semibold text-brand-black backdrop-blur-sm transition-colors hover:bg-brand-orange/20',
-            triggerClassName,
-          )}
-        >
-          <Play className="mr-2 h-4 w-4" />
-          {triggerLabel}
-        </Button>
+        {trigger ?? (
+          <Button
+            type="button"
+            variant="outline"
+            className={cn(
+              'h-12 rounded-full border border-brand-orange/25 bg-brand-orange/10 px-6 font-semibold text-brand-black backdrop-blur-sm transition-colors hover:bg-brand-orange/20',
+              triggerClassName,
+            )}
+          >
+            <Play className="mr-2 h-4 w-4" />
+            {triggerLabel}
+          </Button>
+        )}
       </DialogTrigger>
 
       <DialogContent className="w-[95vw] max-w-3xl overflow-hidden border-none bg-white p-0">

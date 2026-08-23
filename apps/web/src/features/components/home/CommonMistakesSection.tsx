@@ -55,7 +55,7 @@ export function CommonMistakesSection() {
   return (
     <DarkSection id="erros" ariaLabelledBy="erros-title" tone="soft">
       <Reveal>
-        <p className="font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
+        <p className="text-center font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
           A causa
         </p>
       </Reveal>
@@ -63,14 +63,14 @@ export function CommonMistakesSection() {
       <Reveal index={1}>
         <h2
           id="erros-title"
-          className="mt-4 max-w-[16ch] font-display text-4xl uppercase leading-none tracking-tight md:text-5xl lg:text-6xl"
+          className="mx-auto mt-4 max-w-[16ch] text-center font-display text-4xl uppercase leading-none tracking-tight md:text-5xl lg:text-6xl"
         >
           Os 4 erros que travam o seu progresso
         </h2>
       </Reveal>
 
       <Reveal index={2}>
-        <p className="mt-6 max-w-[62ch] text-lg leading-relaxed">
+        <p className="mx-auto mt-6 max-w-[62ch] text-center text-lg leading-relaxed">
           Quem entra atrasado e não sabe que entra atrasado vai entrar atrasado
           outras mil vezes.{" "}
           <strong className="font-semibold text-white">

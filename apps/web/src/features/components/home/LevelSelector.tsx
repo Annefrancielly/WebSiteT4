@@ -82,7 +82,7 @@ export function LevelSelector() {
     // vem de fundo mais claro, e não de sombra.
     <DarkSection id="nivel" ariaLabelledBy="nivel-title" tone="base">
       <Reveal>
-        <p className="font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
+        <p className="text-center font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
           Encontre seu curso
         </p>
       </Reveal>
@@ -90,14 +90,14 @@ export function LevelSelector() {
       <Reveal index={1}>
         <h2
           id="nivel-title"
-          className="mt-4 max-w-[18ch] font-display text-4xl uppercase leading-none tracking-tight md:text-5xl"
+          className="mx-auto mt-4 max-w-[18ch] text-center font-display text-4xl uppercase leading-none tracking-tight md:text-5xl"
         >
           Qual é o seu momento no surf?
         </h2>
       </Reveal>
 
       <Reveal index={2}>
-        <p className="mt-4 max-w-[45ch] text-lg">
+        <p className="mx-auto mt-4 max-w-[45ch] text-center text-lg">
           Um clique. Eu mostro o curso certo para você.
         </p>
       </Reveal>
