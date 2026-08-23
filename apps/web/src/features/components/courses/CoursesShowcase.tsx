@@ -24,34 +24,48 @@ type Props = {
 /**
  * Vitrine dos cursos: a oferta comercial principal do site.
  *
- * A faixa mantém o creme do site. A separação entre card e superfície vem da
- * elevação (sombra em duas camadas) e não de uma inversão de fundo — assim a
- * seção não corta a página ao meio. O preto fica reservado ao título.
+ * A faixa passou do creme para o escuro. Não é preferência estética: os cards
+ * ganharam lista de conteúdo, garantia e cross-sell, e um bloco denso desses
+ * sobre creme vira uma parede de texto cinza. No escuro, cada card lê como um
+ * objeto separado, e o laranja da marca — que sobre creme é só mais uma cor —
+ * vira o ponto mais claro da tela.
+ *
+ * Consequência a acompanhar: a página /cursos usa esta mesma vitrine e passa a
+ * ter uma faixa escura no meio do creme. Isso se resolve quando aquela página
+ * for refatorada; até lá é a mesma costura visível que a Home tem.
  */
 export function CoursesShowcase({
   id = "nossos-cursos",
-  eyebrow = "Escolha seu caminho",
-  title = "Nossos cursos",
+  eyebrow = "Os cursos",
+  title = "Três cursos. Um caminho.",
   className,
 }: Props) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn("bg-brand-beige pt-8 pb-16 md:pb-24", className)}
+      className={cn(
+        "bg-brand-ink-soft py-16 text-brand-ink-text md:py-24",
+        className,
+      )}
     >
       <div className="container mx-auto px-4">
-        <div className="mb-10 text-center md:mb-12">
-          <p className="font-display text-[16px] font-bold uppercase tracking-[0.18em] text-brand-orange">
+        <div className="mb-10 md:mb-12">
+          <p className="font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
             {eyebrow}
           </p>
 
           <h2
             id={`${id}-title`}
-            className="mt-2 text-[32px] font-extrabold uppercase leading-tight text-brand-black"
+            className="mt-4 font-display text-4xl uppercase leading-none tracking-tight text-white md:text-5xl"
           >
             {title}
           </h2>
+
+          <p className="mt-4 max-w-[55ch] text-lg">
+            Cada um resolve um problema específico. Escolha o seu momento acima
+            e eu destaco o certo.
+          </p>
         </div>
 
         {/*
@@ -73,7 +87,7 @@ export function CoursesShowcase({
           aria-label="Cursos disponíveis"
           tabIndex={0}
           className={cn(
-            "mx-auto w-full max-w-6xl gap-3",
+            "mx-auto w-full max-w-6xl items-stretch gap-3 md:gap-6",
             // mobile: trilho horizontal com encaixe
             "-mx-4 flex snap-x snap-mandatory overflow-x-auto px-4 pb-4",
             "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
@@ -102,7 +116,7 @@ export function CoursesShowcase({
               id={`card-${course.id}`}
               className={cn(
                 "w-[86%] shrink-0 snap-center scroll-mt-28 md:w-auto md:shrink",
-                "rounded-card ring-brand-orange ring-offset-4 ring-offset-brand-beige transition-shadow duration-300",
+                "rounded-2xl ring-brand-orange ring-offset-4 ring-offset-brand-ink-soft transition-shadow duration-300",
                 "target:ring-2",
               )}
             >
@@ -116,7 +130,7 @@ export function CoursesShowcase({
           dúvida — quantos existem — sem transformar a vitrine em Client
           Component só para rastrear o card ativo.
         */}
-        <p className="mt-1 text-center text-sm text-brand-black/50 md:hidden">
+        <p className="mt-1 text-center text-sm text-brand-ink-muted md:hidden">
           Deslize para ver os {COURSES.length} cursos →
         </p>
       </div>

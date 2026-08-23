@@ -22,7 +22,44 @@ export type Course = {
   titleLead: string;
   titleAccent: string;
 
+  /**
+   * Uma frase, na voz do Ricardo, dizendo o que muda para quem faz o curso.
+   *
+   * É o primeiro texto que o visitante lê depois do nome, e por isso fala do
+   * RESULTADO, não do conteúdo. "Pare de apenas tentar manobras. Aprenda a
+   * executá-las" vende; "38 aulas sobre manobras" descreve.
+   */
+  pitch: string;
+
   description: string;
+
+  /**
+   * O que a pessoa sai sabendo fazer. Verbos e habilidades, nunca títulos de
+   * módulo — o visitante não compra "Módulo 3", compra saber dropar.
+   *
+   * Ordem importa: é a sequência em que o curso ensina, e ler de cima para
+   * baixo deve dar a sensação de progressão.
+   */
+  learnings: string[];
+
+  /** Diferencial que não cabe na lista acima. Opcional: nem todo curso tem. */
+  bonus?: string;
+
+  /**
+   * Ponte para o curso vizinho, para quem abriu o card errado.
+   *
+   * Existe por um motivo comercial preciso: sem ela, quem percebe que o curso
+   * não é o dele fecha a página. Com ela, ele vai para o card certo. É a
+   * diferença entre perder a venda e mudar de produto.
+   *
+   * `alvoId` é o `id` de outro curso deste mesmo array.
+   */
+  crossSell?: {
+    pergunta: string;
+    rotulo: string;
+    alvoId: string;
+  };
+
   lessons: number;
   level: CourseLevel;
 
@@ -107,8 +144,22 @@ export const COURSES: Course[] = [
     id: "curso-progressivo",
     titleLead: "Curso",
     titleAccent: "Progressivo",
+    pitch: "Pare de apenas tentar manobras. Aprenda a executá-las.",
     description:
-      "Domine manobras avançadas e leve seu surf para o próximo nível.",
+      "Entenda como seu corpo, seus pés e sua prancha precisam trabalhar para transformar movimentos em cavadas, rasgadas, batidas e cutbacks com mais técnica e controle.",
+    learnings: [
+      "Postura dos pés",
+      "Cavada",
+      "Rasgada",
+      "Batida",
+      "Cutback",
+    ],
+    bonus: "Primeiros movimentos no simulador",
+    crossSell: {
+      pergunta: "Ainda não gera velocidade na onda?",
+      rotulo: "Comece pelo Evolução",
+      alvoId: "evolucao-intermediario-avancado",
+    },
     lessons: 38,
     level: "Avançado",
     // PROVISÓRIA — substituir pela fotografia definitiva do curso.
@@ -125,8 +176,23 @@ export const COURSES: Course[] = [
     id: "evolucao-intermediario-avancado",
     titleLead: "Evolução",
     titleAccent: "Intermediário Avançado",
+    pitch: "Você já pega ondas. Agora aprenda a aproveitá-las de verdade.",
     description:
-      "Evolua suas manobras e surfe ondas maiores com confiança.",
+      "Se você perde a parede, entra atrasado, rema demais ou não consegue gerar velocidade, este curso vai te mostrar onde está o erro e como corrigir.",
+    learnings: [
+      "Como escolher a onda certa",
+      "Posicionamento no pico",
+      "Postura para entrada na onda",
+      "Remada eficiente",
+      "Drop com direcionamento",
+      "Como gerar velocidade",
+      "Como passar por baixo das ondas",
+    ],
+    crossSell: {
+      pergunta: "Ainda não pega ondas formadas?",
+      rotulo: "Comece pelo Do Zero",
+      alvoId: "aprendendo-a-surfar-do-zero",
+    },
     lessons: 37,
     level: "Intermediário",
     // PROVISÓRIA — substituir pela fotografia definitiva do curso.
@@ -142,8 +208,22 @@ export const COURSES: Course[] = [
     id: "aprendendo-a-surfar-do-zero",
     titleLead: "Aprendendo a",
     titleAccent: "Surfar do Zero",
+    pitch: "Aprenda a surfar do jeito certo desde o início.",
     description:
-      "Aprenda do absoluto zero e pegue suas primeiras ondas com segurança.",
+      "Um método passo a passo para você chegar ao mar sabendo como remar, levantar, se posicionar, direcionar a prancha e pegar suas primeiras ondas com mais segurança e confiança.",
+    learnings: [
+      "Base e posicionamento na prancha",
+      "Como escolher a prancha ideal",
+      "Drop passo a passo",
+      "Postura correta",
+      "Como direcionar a prancha",
+      "Remada eficiente",
+    ],
+    crossSell: {
+      pergunta: "Já pega ondas?",
+      rotulo: "Veja o Evolução",
+      alvoId: "evolucao-intermediario-avancado",
+    },
     lessons: 34,
     level: "Iniciante",
     // PROVISÓRIA — substituir pela fotografia definitiva do curso.

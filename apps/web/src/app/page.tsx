@@ -52,7 +52,7 @@ export default function Home() {
 
       <LevelSelector />
 
-      <CoursesShowcase id="cursos" className="pt-16 md:pt-20" />
+      <CoursesShowcase id="cursos" />
 
       <PlansSection />
 
