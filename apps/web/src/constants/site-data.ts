@@ -195,6 +195,24 @@ export type ProvaSocial = {
   rotulo: string;
 };
 
+/** Perfil oficial da T4. Centralizado para não ser reescrito em cada seção. */
+export const INSTAGRAM_URL = "https://www.instagram.com/t4_surf/";
+
+/**
+ * Frase de assinatura do Ricardo na seção de autoridade.
+ *
+ * PLACEHOLDER APROVADO. Esta redação é minha, não dele — ele aprovou o
+ * protótipo com a marcação "frase a ser escrita por ele". Está aqui isolada
+ * numa constante justamente para ele reescrever com as próprias palavras sem
+ * ninguém precisar abrir um componente.
+ *
+ * Se ficar vazia, a seção deixa de exibir a citação e a assinatura. Frase
+ * atribuída a uma pessoa real precisa ser dela — melhor não ter do que ter
+ * uma inventada.
+ */
+export const PROFESSOR_FRASE =
+  "A maioria trava porque tenta aprender no mar o que deveria ter aprendido na areia.";
+
 export const PROVAS_SOCIAIS: ProvaSocial[] = [
   { valor: 5, casasDecimais: 1, sufixo: "★", rotulo: "nota no Google" },
   { valor: 35, rotulo: "avaliações" },

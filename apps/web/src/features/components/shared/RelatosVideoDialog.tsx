@@ -12,12 +12,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/features/components/ui/dialog';
+import { cn } from '@/lib/utils';
 
 type RelatosVideoDialogProps = {
   youtubeUrl: string;
   triggerLabel?: string;
   dialogTitle?: string;
   dialogDescription?: string;
+
+  /**
+   * Estilo do botão que abre o vídeo.
+   *
+   * Existe porque o mesmo diálogo passou a ser usado sobre fundo escuro, e o
+   * estilo padrão tem texto preto. É OPCIONAL de propósito: sem ela o
+   * componente se comporta exatamente como antes, então nenhum uso já
+   * existente muda de aparência.
+   */
+  triggerClassName?: string;
 };
 
 function toYouTubeEmbedUrl(input: string) {
@@ -55,6 +66,7 @@ export function RelatosVideoDialog({
   triggerLabel = 'Ver relatos',
   dialogTitle = 'Relatos em vídeo',
   dialogDescription = 'Assista ao vídeo no player abaixo.',
+  triggerClassName,
 }: RelatosVideoDialogProps) {
   const embedBase = React.useMemo(() => toYouTubeEmbedUrl(youtubeUrl), [youtubeUrl]);
 
@@ -68,7 +80,10 @@ export function RelatosVideoDialog({
         <Button
           type="button"
           variant="outline"
-          className="h-12 rounded-full border border-brand-orange/25 bg-brand-orange/10 px-6 font-semibold text-brand-black backdrop-blur-sm transition-colors hover:bg-brand-orange/20"
+          className={cn(
+            'h-12 rounded-full border border-brand-orange/25 bg-brand-orange/10 px-6 font-semibold text-brand-black backdrop-blur-sm transition-colors hover:bg-brand-orange/20',
+            triggerClassName,
+          )}
         >
           <Play className="mr-2 h-4 w-4" />
           {triggerLabel}
