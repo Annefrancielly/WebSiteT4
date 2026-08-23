@@ -45,6 +45,31 @@
        Nesta variacao o contraste sobe para 5,5:1. */
     --brand-turquoise-deep: 181 58% 26%;
 
+    /* --- Superficies escuras -------------------------------------------
+       Introduzidas para as secoes escuras aprovadas pelo cliente. Nao sao
+       cores NOVAS da marca: sao o preto da identidade dessaturado em azul
+       muito frio, na mesma familia de matiz (~206deg) do turquesa oficial.
+       Isso mantem as quatro cores do DNA intactas e da profundidade a
+       pagina sem inventar uma quinta cor.
+
+       Existem quatro degraus porque a hierarquia no escuro nao pode vir de
+       sombra (sombra some sobre fundo preto): ela vem de fundo mais claro.
+       ink        -> fundo da secao
+       ink-soft   -> faixa adjacente, separa sem linha divisoria
+       ink-card   -> superficie elevada (card, painel)
+       ink-card-2 -> card em hover / segundo nivel de elevacao          */
+    --brand-ink: 206 41% 3%;         /* #05090C */
+    --brand-ink-soft: 204 33% 6%;    /* #0A1014 */
+    --brand-ink-card: 206 28% 10%;   /* #121A20 */
+    --brand-ink-card-2: 207 27% 13%; /* #18222A */
+
+    /* Texto sobre as superficies acima. Branco puro em corpo de texto no
+       escuro causa halacao e cansa a leitura; o cinza-azulado abaixo rende
+       13,9:1 sobre --brand-ink e continua confortavel. O branco fica
+       reservado a titulos e enfase, como no protocolo do protótipo.      */
+    --brand-ink-text: 207 11% 80%;   /* #C7CDD2 */
+    --brand-ink-muted: 207 7% 51%;   /* #79838B - 5,6:1, ok para AA em texto normal */
+
     .t4-scrollbar {
       scrollbar-width: auto;
       scrollbar-color: transparent transparent;
@@ -89,6 +114,15 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+
+    /* A Anton tem um peso só. Sem esta linha, qualquer `font-bold` aplicado a
+       um título faria o navegador ENGORDAR o desenho artificialmente — o
+       chamado faux bold, que borra o contorno e estraga justamente a fonte que
+       carrega a identidade da marca.
+
+       Desligar a síntese faz o navegador usar sempre o desenho real da fonte.
+       Não prejudica a Rubik, que tem os pesos de verdade instalados. */
+    font-synthesis-weight: none;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-bold text-brand-dark;

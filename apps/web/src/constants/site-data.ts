@@ -146,3 +146,25 @@ export const CURSOS_CONVERSAO_KIWIFY_URL = "https://pay.kiwify.com.br/inoxL34";
 
 export const PROFESSOR_TRAJETORIA_YOUTUBE_URL = "https://youtu.be/GI9on9VKkOA";
 
+/**
+ * Telefone comercial da T4, só dígitos e com código do país — é o formato que
+ * a API do WhatsApp exige em wa.me.
+ *
+ * Hoje o número está escrito à mão em cinco arquivos diferentes. Trocar de
+ * número significaria caçar todos, e o que ficasse para trás mandaria cliente
+ * para um contato morto. Componentes novos usam esta constante; os antigos
+ * migram quando forem refatorados.
+ */
+export const WHATSAPP_NUMERO = "5579988330770";
+
+/**
+ * Monta o link do WhatsApp com a mensagem já preenchida.
+ *
+ * `encodeURIComponent` não é detalhe: acento, espaço e emoji quebram a URL se
+ * forem enviados crus, e a conversa abre vazia — o visitante que clicou com
+ * intenção de comprar chega sem contexto nenhum do outro lado.
+ */
+export function criarUrlWhatsApp(mensagem: string): string {
+  return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
+}
+

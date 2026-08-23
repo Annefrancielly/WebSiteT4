@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
-import { Rubik, Saira_Condensed } from "next/font/google";
+import { Anton, Rubik } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "../features/components/layout/Navbar";
+import { SiteHeader } from "@/features/components/layout/SiteHeader";
 import { Footer } from "@/features/components/layout/Footer";
 
 /**
  * Sistema tipográfico T4.
  *
- * Saira Condensed (display) -> headlines, nomes de curso, seções e botões.
- *   Escolhida por coerência com o logotipo TORQUATO, que é uma grotesca de
- *   esqueleto quadrado: a Saira repete essa geometria e ainda mantém a largura
- *   condensada que uma headline de conversão precisa. Nove pesos disponíveis,
- *   o que permite hierarquia real entre h1, h2 e h3 — algo impossível com uma
- *   display de peso único.
+ * Anton (display) -> headlines, nomes de curso, seções e botões.
+ *   É a fonte do design system oficial do cliente e a do protótipo aprovado.
+ *   Grotesca condensada de peso único, desenhada para título grande: o
+ *   contraste vem do TAMANHO e da caixa alta, não da variação de peso.
+ *
+ *   Consequência prática, e é o motivo de este comentário existir: Anton tem
+ *   UM peso só (400). Classes como `font-bold` e `font-black` aplicadas ao
+ *   display deixam de ter efeito visual — a hierarquia entre h1, h2 e h3 passa
+ *   a ser feita por tamanho e espaçamento. Não é limitação a contornar, é como
+ *   a fonte foi projetada para funcionar.
+ *
+ *   Substituiu a Saira Condensed, que era escolha técnica anterior (nove pesos)
+ *   e não a preferência do cliente. Onde a hierarquia dependia de peso, ela
+ *   precisa ser refeita com escala.
  *
  * Rubik (texto) -> descrições, preços, informações e conteúdo corrido. Cantos
  *   sutilmente arredondados dão leitura relaxada sem infantilizar, contrastando
@@ -29,9 +37,10 @@ const fontSans = Rubik({
   display: "swap",
 });
 
-const fontDisplay = Saira_Condensed({
+const fontDisplay = Anton({
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  // Peso único: é tudo o que a Anton tem.
+  weight: "400",
   variable: "--font-display",
   display: "swap",
 });
@@ -82,7 +91,7 @@ export default function RootLayout({
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
         </noscript>
 
-        <Navbar />
+        <SiteHeader />
         <main className="min-h-screen">{children}</main>
         <Footer />
       </body>

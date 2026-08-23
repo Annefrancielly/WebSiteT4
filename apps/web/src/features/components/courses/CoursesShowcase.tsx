@@ -54,11 +54,71 @@ export function CoursesShowcase({
           </h2>
         </div>
 
-        <div className="mx-auto grid w-full max-w-6xl gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {/*
+          No celular a vitrine vira um trilho deslizante; do md para cima volta a
+          ser exatamente o grid de antes.
+
+          Usa scroll-snap nativo em vez de biblioteca: a inércia do gesto já é do
+          sistema operacional, funciona sem JavaScript e não adiciona peso ao
+          bundle. Uma biblioteca de carrossel aqui só reimplementaria, pior, o
+          que o navegador entrega de graça.
+
+          `w-[86%]` é a decisão que faz o padrão funcionar comercialmente: deixa
+          14% do próximo card à mostra. Card ocupando a largura inteira vira uma
+          parede — o visitante não descobre que existem outros dois, e carrossel
+          que esconde produto vende menos que lista que mostra.
+        */}
+        <div
+          role="region"
+          aria-label="Cursos disponíveis"
+          tabIndex={0}
+          className={cn(
+            "mx-auto w-full max-w-6xl gap-3",
+            // mobile: trilho horizontal com encaixe
+            "-mx-4 flex snap-x snap-mandatory overflow-x-auto px-4 pb-4",
+            "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            // md+: o grid original, sem nenhuma mudança
+            "md:mx-auto md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0",
+            "lg:grid-cols-3",
+          )}
+        >
           {COURSES.map((course) => (
-            <CourseCard key={course.id} course={course} />
+            /*
+              O `id` é o alvo do seletor de nível, e a variante `target:` é o
+              que destaca o card escolhido.
+
+              Vale registrar por quê: `:target` é uma pseudo-classe do CSS que
+              casa com o elemento apontado pelo hash da URL. Isso significa que
+              o realce acontece SEM estado compartilhado entre o seletor e a
+              vitrine — sem contexto, sem elevar estado, e sem transformar esta
+              seção em Client Component. O navegador já sabe qual elemento foi
+              escolhido; só faltava perguntar a ele.
+
+              `scroll-mt-28` compensa o cabeçalho fixo, senão a âncora para com
+              o topo do card debaixo da barra.
+            */
+            <div
+              key={course.id}
+              id={`card-${course.id}`}
+              className={cn(
+                "w-[86%] shrink-0 snap-center scroll-mt-28 md:w-auto md:shrink",
+                "rounded-card ring-brand-orange ring-offset-4 ring-offset-brand-beige transition-shadow duration-300",
+                "target:ring-2",
+              )}
+            >
+              <CourseCard course={course} />
+            </div>
           ))}
         </div>
+
+        {/*
+          Substitui os indicadores de posição por uma frase. Resolve a mesma
+          dúvida — quantos existem — sem transformar a vitrine em Client
+          Component só para rastrear o card ativo.
+        */}
+        <p className="mt-1 text-center text-sm text-brand-black/50 md:hidden">
+          Deslize para ver os {COURSES.length} cursos →
+        </p>
       </div>
     </section>
   );

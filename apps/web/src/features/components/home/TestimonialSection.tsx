@@ -246,7 +246,13 @@ export function TestimonialsSection() {
   const hasWhatsapp = WHATSAPP_FEEDBACKS.length > 0;
 
   return (
-    <section className="py-24 bg-[#F2F0EB] relative overflow-hidden">
+    // id="resultados": alvo do link "Resultados" do cabeçalho novo.
+    // scroll-mt-24 compensa a altura do header fixo — sem ele a âncora para
+    // com o título da seção escondido atrás da barra.
+    <section
+      id="resultados"
+      className="py-24 bg-[#F2F0EB] relative overflow-hidden scroll-mt-24"
+    >
       <div className="container px-4 mx-auto relative z-10">
         <div className="text-center mb-16 space-y-4">
           <Badge className="bg-brand-orange text-white hover:bg-orange-600 px-4 py-1 border-none">

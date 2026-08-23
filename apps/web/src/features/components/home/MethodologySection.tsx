@@ -90,7 +90,10 @@ export function MethodologySection({
   phase2 = DEFAULT_PHASE_2,
 }: Props) {
   return (
-    <section className="py-24 bg-brand-beige">
+    // id="metodologia": alvo do link "Método" do cabeçalho novo. scroll-mt-24
+    // compensa a altura do header fixo, senão a âncora para com o título
+    // escondido atrás da barra.
+    <section id="metodologia" className="py-24 bg-brand-beige scroll-mt-24">
       <div className="container px-4 mx-auto">
         {/* Cabeçalho */}
         <div className="text-center mb-16">

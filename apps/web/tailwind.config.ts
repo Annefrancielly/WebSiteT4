@@ -19,11 +19,33 @@ const config = {
             },
         },
         extend: {
-            // Tipografia oficial T4: Montserrat para texto, Anton para titulos.
-            // As variaveis sao injetadas no <html> por next/font (app/layout.tsx).
+            // Tipografia oficial T4: Rubik para texto, Anton para titulos.
+            // As variaveis sao injetadas no <html> por next/font (app/layout.tsx),
+            // que documenta a escolha de cada uma.
             fontFamily: {
                 sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
                 display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
+            },
+            // Escalas fluidas do Hero.
+            //
+            // Ficam aqui, e nao como valor arbitrario no componente, por dois
+            // motivos: o clamp carrega junto o line-height e o tracking certos
+            // (uma headline de 7rem com line-height 1.5 se desmonta), e quem
+            // for reaproveitar a escala em outra pagina usa uma classe em vez
+            // de copiar a formula.
+            //
+            // clamp(min, preferido, max): abaixo de ~375px trava em 44px;
+            // acima de ~1400px trava em 112px; no meio cresce com a largura da
+            // tela. Substitui a necessidade de tres breakpoints tipograficos.
+            fontSize: {
+                hero: [
+                    "clamp(2.75rem, 1.1rem + 7vw, 7rem)",
+                    { lineHeight: "0.88", letterSpacing: "-0.025em" },
+                ],
+                "hero-sub": [
+                    "clamp(1.0625rem, 1.02rem + 0.2vw, 1.25rem)",
+                    { lineHeight: "1.5" },
+                ],
             },
             colors: {
                 // Cores T4
@@ -38,6 +60,18 @@ const config = {
                     // Turquesa escurecido: usado nos precos, onde o turquesa
                     // puro nao atinge contraste AA sobre o creme.
                     "turquoise-deep": "hsl(var(--brand-turquoise-deep))",
+
+                    // Superficies escuras (ver globals.css). Nao substituem
+                    // brand-black: preto puro continua sendo a cor de tipografia
+                    // sobre o creme. Estes tokens sao fundo, nunca texto.
+                    ink: "hsl(var(--brand-ink))",
+                    "ink-soft": "hsl(var(--brand-ink-soft))",
+                    "ink-card": "hsl(var(--brand-ink-card))",
+                    "ink-card-2": "hsl(var(--brand-ink-card-2))",
+
+                    // Texto sobre superficie escura.
+                    "ink-text": "hsl(var(--brand-ink-text))",
+                    "ink-muted": "hsl(var(--brand-ink-muted))",
                 },
                 // Sistema (Mapeado para Light Mode sempre)
                 border: "hsl(var(--border))",
