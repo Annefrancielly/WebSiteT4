@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -47,24 +46,58 @@ export function HeroSection() {
   return (
     <section className="relative flex min-h-screen min-h-[100svh] items-center overflow-hidden bg-brand-ink pb-16 pt-28 md:pt-32">
       {/*
-        Fundo. A fotografia continua sendo a mesma já otimizada e publicada —
-        trocar por gradiente puro perderia o único elemento do Hero que mostra
-        surf de verdade.
+        Fundo com DIREÇÃO DE ARTE: dois recortes da mesma fotografia, um por
+        formato de tela. O navegador baixa só o que serve ao aparelho dele.
 
-        `priority` mantém o comportamento atual: esta imagem é o LCP da Home e
-        precisa do preload. Sem ela, o maior elemento da primeira tela passaria
-        a carregar em fila com o resto.
+          hero-capa.jpg         1920×1280 · 207 KB · deitado, para o desktop
+          hero-capa-mobile.jpg  1080×1920 · 157 KB · em pé, para o celular
+
+        Por que dois arquivos e não um só reposicionado por CSS: numa tela de
+        celular, o `object-cover` de uma foto 3:2 mostra apenas ~31% da largura
+        dela. Não existe valor de `object-position` que resolva — qualquer
+        janela tão estreita cai atrás da headline, que ocupa a tela inteira. No
+        recorte vertical o surfista é reposicionado no topo, ACIMA de onde o
+        texto começa.
+
+        O <picture> é o que torna isso barato: com `media`, o navegador escolhe
+        a fonte antes de baixar qualquer byte — o celular nunca vê os 207 KB da
+        versão de desktop.
+
+        Sem next/image aqui de propósito. Ele não faz direção de arte, e como o
+        `images.unoptimized` está ligado no next.config ele também não
+        redimensiona nada: não haveria o que perder. `fetchPriority="high"`
+        substitui o `priority`, e é o que garante a prioridade de download desta
+        imagem, que é o LCP da Home.
+
+        `alt=""` com aria-hidden porque é fundo decorativo: o conteúdo do Hero é
+        a headline. Descrever a foto faria o leitor de tela ler uma legenda
+        antes da promessa do produto.
+
+        NOME NOVO A CADA VERSÃO DA FOTO, sempre. Arquivo trocado com o mesmo
+        nome continua vindo do cache do navegador — aconteceu durante o ajuste
+        deste enquadramento, e aconteceria com o visitante depois de um deploy.
       */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src={withBasePath("/hero-v2.jpg")}
-          alt=""
-          aria-hidden="true"
-          fill
-          sizes="100vw"
-          priority
-          className="animate-in zoom-in-105 object-cover duration-[9000ms] ease-linear fill-mode-both motion-reduce:animate-none"
-        />
+        <picture>
+          <source
+            media="(min-width: 768px)"
+            srcSet={withBasePath("/hero-capa.jpg")}
+          />
+
+          <img
+            src={withBasePath("/hero-capa-mobile.jpg")}
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            decoding="async"
+            /*
+              `object-[80%_center]` acerta os DOIS recortes: no desktop a janela
+              é mais larga que a foto e o valor é ignorado; nas telas estreitas
+              ele alinha a janela com o surfista.
+            */
+            className="animate-in zoom-in-105 absolute inset-0 size-full object-cover object-[80%_center] duration-[9000ms] ease-linear fill-mode-both motion-reduce:animate-none"
+          />
+        </picture>
 
         {/*
           Duas camadas de escurecimento, não uma:
@@ -95,13 +128,25 @@ export function HeroSection() {
           */}
           <span className="block overflow-hidden pb-[0.08em]">
             <span className="block animate-in slide-in-from-bottom-full duration-[850ms] ease-[cubic-bezier(0.16,1,0.3,1)] fill-mode-both motion-reduce:animate-none">
-              Aprenda a surfar
+            APRENDA EM
             </span>
           </span>
 
           <span className="block overflow-hidden pb-[0.08em] text-brand-orange">
             <span className="block animate-in slide-in-from-bottom-full delay-150 duration-[850ms] ease-[cubic-bezier(0.16,1,0.3,1)] fill-mode-both motion-reduce:animate-none">
-              Do zero ao avançado
+              3 MESES
+            </span>
+          </span>
+
+          <span className="block overflow-hidden pb-[0.08em]">
+            <span className="block animate-in slide-in-from-bottom-full duration-[850ms] ease-[cubic-bezier(0.16,1,0.3,1)] fill-mode-both motion-reduce:animate-none">
+            O QUE VOCÊ LEVARIA
+            </span>
+          </span>
+
+          <span className="block overflow-hidden pb-[0.08em] text-brand-orange">
+            <span className="block animate-in slide-in-from-bottom-full delay-150 duration-[850ms] ease-[cubic-bezier(0.16,1,0.3,1)] fill-mode-both motion-reduce:animate-none">
+              3 ANOS
             </span>
           </span>
         </h1>
@@ -113,10 +158,10 @@ export function HeroSection() {
           cai bem dentro dela em qualquer tela.
         */}
         <p className="mt-6 max-w-[34ch] text-hero-sub text-brand-ink-text animate-in fade-in slide-in-from-bottom-4 delay-300 duration-700 fill-mode-both motion-reduce:animate-none">
-          Em <strong className="font-bold text-white">3 meses</strong> o que
-          você levaria{" "}
-          <strong className="font-bold text-white">3 anos</strong> para
-          aprender sozinho.
+          Mesmo surfando apenas<strong className="font-bold text-white"> finais de semana </strong> 
+          você irá conseguir em{" "}
+          <strong className="font-bold text-white">3 meses</strong> aprender
+          tudo que precisa saber para evoluir<strong className="font-bold text-white"></strong>
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 animate-in fade-in slide-in-from-bottom-4 delay-500 duration-700 fill-mode-both motion-reduce:animate-none">
