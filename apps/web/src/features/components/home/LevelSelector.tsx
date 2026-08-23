@@ -76,7 +76,10 @@ export function LevelSelector() {
   const [escolhida, setEscolhida] = useState<CourseLevel | null>(null);
 
   return (
-    <DarkSection id="nivel" ariaLabelledBy="nivel-title" tone="base">
+    // tone="soft": vem logo depois da seção do Método, que é "base". Um degrau
+    // de claridade separa as duas faixas escuras sem precisar de linha
+    // divisória — no escuro, hierarquia vem de fundo mais claro, não de sombra.
+    <DarkSection id="nivel" ariaLabelledBy="nivel-title" tone="soft">
       <Reveal>
         <p className="font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
           Encontre seu curso

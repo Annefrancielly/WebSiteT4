@@ -33,11 +33,7 @@ type LinkNav = {
  */
 const LINKS_PRINCIPAIS: LinkNav[] = [
   { label: "Cursos", href: "/cursos/" },
-  // Vira "#metodo" quando a seção do vídeo entrar na Home (etapa 5). Até lá
-  // aponta para a seção que hoje explica o método, dentro da página de Cursos.
-  // Não pode apontar para "/cursos/" puro: dois itens vizinhos do menu levando
-  // ao mesmo lugar fazem o visitante achar que clicou errado.
-  { label: "Método", href: "/cursos/#metodologia" },
+  { label: "Método", href: "#metodo" },
   { label: "Resultados", href: "#resultados" },
   { label: "Sobre", href: "#sobre" },
 ];

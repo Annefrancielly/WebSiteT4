@@ -1,4 +1,5 @@
 import { HeroSection } from "@/features/components/home/HeroSection";
+import { MethodVideoSection } from "@/features/components/home/MethodVideoSection";
 import { LevelSelector } from "@/features/components/home/LevelSelector";
 import { CoursesShowcase } from "@/features/components/courses/CoursesShowcase";
 import { PlansSection } from "@/features/components/home/PlansSection";
@@ -16,12 +17,16 @@ import { FaqContactSection } from "@/features/components/home/FaqContactSection"
  *
  * A ordem obedece à sequência da decisão de compra:
  *
- *   promessa  ->  "isso é para mim?"  ->  a oferta
- *   Hero          LevelSelector           CoursesShowcase
+ *   promessa -> por que acredito -> isso é para mim? -> a oferta
+ *   Hero        MethodVideo        LevelSelector       CoursesShowcase
  *
- * O seletor precisa vir ANTES da vitrine: ele existe para levar o visitante
- * direto ao card certo, e não faria sentido oferecer o atalho depois que ele já
- * percorreu os três.
+ * Duas regras de ordem que não devem ser trocadas por conveniência:
+ *
+ * - o Método vem antes do seletor porque ninguém escolhe um curso de quem ainda
+ *   não convenceu. Primeiro a razão para acreditar, depois o pedido de decisão.
+ * - o seletor vem antes da vitrine porque ele existe para levar o visitante
+ *   direto ao card certo; oferecer o atalho depois que ele já percorreu os três
+ *   não serviria para nada.
  */
 export default function Home() {
   return (
@@ -30,6 +35,8 @@ export default function Home() {
     // leitores de tela. O min-h-screen também já vem de lá.
     <div className="bg-brand-beige">
       <HeroSection />
+
+      <MethodVideoSection />
 
       <LevelSelector />
 

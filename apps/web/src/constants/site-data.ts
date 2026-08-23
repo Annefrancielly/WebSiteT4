@@ -147,6 +147,21 @@ export const CURSOS_CONVERSAO_KIWIFY_URL = "https://pay.kiwify.com.br/inoxL34";
 export const PROFESSOR_TRAJETORIA_YOUTUBE_URL = "https://youtu.be/GI9on9VKkOA";
 
 /**
+ * Vídeo em que o Ricardo responde à pergunta que dá título à seção do Método:
+ * "por que uns levam 3 anos e outros levam 3 meses?".
+ *
+ * ESTÁ VAZIO DE PROPÓSITO. É só colar aqui o link que o Ricardo mandar — pode
+ * ser no formato "https://youtu.be/XXXX" ou "https://www.youtube.com/watch?v=XXXX",
+ * os dois são aceitos.
+ *
+ * Enquanto estiver vazio, a seção existe com o título e o texto, e o bloco do
+ * vídeo simplesmente não é renderizado. Preferi assim a mostrar uma caixa
+ * "vídeo em breve": se esta versão for publicada antes do link chegar, a página
+ * continua parecendo pronta, e não inacabada.
+ */
+export const METODO_VIDEO_YOUTUBE_URL = "";
+
+/**
  * Telefone comercial da T4, só dígitos e com código do país — é o formato que
  * a API do WhatsApp exige em wa.me.
  *
