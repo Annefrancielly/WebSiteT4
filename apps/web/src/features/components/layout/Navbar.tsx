@@ -23,7 +23,7 @@ type NavLink = {
 
 const NAV_LINKS: NavLink[] = [
   { label: "Início", href: "/" },
-  { label: "Cursos", href: "/cursos" },
+  { label: "Cursos", href: "" },
   { label: "Surf Trips", href: "/surf-trips" },
   { label: "Agendar Aula", href: "/agendar-aula" },
   { label: "Sobre", href: "#sobre" },

@@ -32,7 +32,7 @@ type LinkNav = {
  * clicar. Estes quatro são as etapas da decisão de compra, na ordem.
  */
 const LINKS_PRINCIPAIS: LinkNav[] = [
-  { label: "Cursos", href: "/cursos/" },
+  { label: "Cursos", href: "#cursos" },
   { label: "Método", href: "#metodo" },
   { label: "Resultados", href: "#resultados" },
   { label: "Sobre", href: "#sobre" },
