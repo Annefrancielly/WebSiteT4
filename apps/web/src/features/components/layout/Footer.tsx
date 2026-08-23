@@ -1,184 +1,185 @@
-import Link from "next/link";
-import { Instagram, MessageCircle, LucideIcon } from "lucide-react";
-import { Button } from "@/features/components/ui/button";
-import { Separator } from "@/features/components/ui/separator";
 import Image from "next/image";
+import Link from "next/link";
+import { Instagram, MessageCircle } from "lucide-react";
+
+import { COURSES } from "@/constants/courses";
+import { criarUrlWhatsApp, INSTAGRAM_URL } from "@/constants/site-data";
 import { withBasePath } from "@/lib/paths";
 
-export function Footer() {
+const MENSAGEM_RODAPE =
+  "Olá! Vim pelo site da T4 Surf e gostaria de falar sobre os cursos.";
+
+/**
+ * Contato da desenvolvedora. Fica separado do WhatsApp comercial da T4 de
+ * propósito: são dois números, com dois donos e dois propósitos, e misturá-los
+ * numa constante só seria pedir para alguém trocar o errado.
+ */
+const WHATSAPP_DESENVOLVEDORA = "https://wa.me/5579999331339";
+
+type LinkRodape = {
+  label: string;
+  href: string;
+  externo?: boolean;
+};
+
+/**
+ * Os cursos vêm do array real, não escritos à mão.
+ *
+ * Assim o rodapé não pode divergir da vitrine: curso novo aparece aqui sozinho,
+ * curso renomeado muda de nome aqui junto, e as âncoras continuam apontando
+ * para os cards certos porque usam o mesmo `id`.
+ *
+ * A ordem é invertida em relação à vitrine: aqui a leitura é uma lista, e em
+ * lista faz mais sentido começar por onde a pessoa começa a aprender.
+ */
+const LINKS_CURSOS: LinkRodape[] = [...COURSES]
+  .reverse()
+  .map((curso) => ({
+    label: `${curso.titleLead} ${curso.titleAccent}`,
+    href: `/#card-${curso.id}`,
+  }));
+
+const LINKS_T4: LinkRodape[] = [
+  { label: "O Método T4", href: "/#metodo" },
+  { label: "Resultados", href: "/#resultados" },
+  { label: "Sobre o Ricardo", href: "/#sobre" },
+  { label: "Surf Trips", href: "/surf-trips/" },
+];
+
+const LINKS_AJUDA: LinkRodape[] = [
+  { label: "Perguntas frequentes", href: "/faq/" },
+  { label: "Aulas presenciais", href: "/agendar-aula/" },
+  { label: "Falar no WhatsApp", href: criarUrlWhatsApp(MENSAGEM_RODAPE), externo: true },
+];
+
+function ColunaDeLinks({
+  titulo,
+  links,
+}: {
+  titulo: string;
+  links: LinkRodape[];
+}) {
   return (
-    <footer className="bg-brand-dark pb-8 pt-16 text-white">
-      <div className="container mx-auto px-4">
-        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-4">
-          <div className="space-y-4">
-            <Image
-              src={withBasePath("/logo.png")}
-              alt="T4 Surf"
-              width={160}
-              height={56}
-              className="mx-auto block h-12 w-auto object-contain"
-            />
+    <nav aria-label={titulo}>
+      <h2 className="font-display text-[10px] font-bold uppercase tracking-[0.14em] text-brand-ink-muted">
+        {titulo}
+      </h2>
 
-            <p className="text-sm leading-relaxed text-gray-400">
-              Metodologia comprovada para transformar iniciantes em surfistas
-              confiantes. Aulas, cursos online e surf trips para todos os
-              níveis.
-            </p>
-
-            <div className="flex gap-4 pt-2">
-              <SocialLink
-                href="https://www.instagram.com/t4_surf/"
-                icon={Instagram}
-                label="Instagram da T4 Surf"
-              />
-            </div>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-lg font-bold text-brand-orange">
-              Navegação
-            </h4>
-
-            <ul className="space-y-3 text-sm text-gray-400">
-              <li>
-                <Link href="/" className="transition-colors hover:text-white">
-                  Início
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/cursos"
-                  className="transition-colors hover:text-white"
-                >
-                  Cursos Online
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/agendar-aula"
-                  className="transition-colors hover:text-white"
-                >
-                  Aulas Presenciais
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/surf-trips"
-                  className="transition-colors hover:text-white"
-                >
-                  Surf Trips
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/" className="transition-colors hover:text-white">
-                  Sobre o Instrutor
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-lg font-bold text-brand-orange">
-              Suporte
-            </h4>
-
-            <ul className="space-y-3 text-sm text-gray-400">
-              <li>
-                <Link
-                  href="/faq"
-                  className="transition-colors hover:text-white"
-                >
-                  Central de Ajuda
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="https://wa.me/+5579988330770"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:text-white"
-                >
-                  Atendimento no WhatsApp
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-lg font-bold text-brand-orange">
-              Fale Conosco
-            </h4>
-
-            <p className="mb-4 text-sm text-gray-400">
-              Dúvidas sobre qual o melhor curso ou prancha para você?
-            </p>
-
-            <Button
-              variant="outline"
-              className="w-full gap-2 border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
-              asChild
+      <ul className="mt-4 grid gap-1">
+        {links.map((link) => (
+          <li key={link.label}>
+            <Link
+              href={link.href}
+              target={link.externo ? "_blank" : undefined}
+              rel={link.externo ? "noopener noreferrer" : undefined}
+              className="block py-1.5 text-[14.5px] text-brand-ink-text transition-colors hover:text-brand-orange"
             >
-              <Link
-                href="https://wa.me/+5579988330770"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <MessageCircle className="h-4 w-4 text-green-500" />
-                WhatsApp Oficial
-              </Link>
-            </Button>
-
-            <p className="mt-4 text-xs text-gray-500">Seg à Sex: 09h às 18h</p>
-          </div>
-        </div>
-
-        <Separator className="mb-8 bg-gray-800" />
-
-        <div className="flex flex-col items-center justify-between gap-4 text-xs text-gray-500 md:flex-row">
-          <p>
-            &copy; {new Date().getFullYear()} T4 Surf. Todos os direitos
-            reservados.
-          </p>
-
-          <div className="flex items-center gap-2">
-          <li>
-                <Link
-                  href="https://wa.me/+5579999331339"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:text-white"
-                >
-                  Desenvolvido por Anne Siqueira
-                </Link>
-              </li>
-          </div>
-        </div>
-      </div>
-    </footer>
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 
-interface SocialLinkProps {
-  href: string;
-  icon: LucideIcon;
-  label: string;
-}
-
-function SocialLink({ href, icon: Icon, label }: SocialLinkProps) {
+/**
+ * Rodapé do site.
+ *
+ * Passou para as superfícies escuras do novo sistema e ganhou uma coluna de
+ * cursos gerada a partir do array real — antes o rodapé não citava nenhum
+ * curso, justamente na área do site em que o visitante que rolou a página
+ * inteira procura o caminho de volta para a oferta.
+ *
+ * Três defeitos foram corrigidos junto, e vale nomeá-los:
+ *
+ * 1. Havia um <li> solto, fora de qualquer <ul>, no bloco de crédito. HTML
+ *    inválido: o navegador conserta na marra e o leitor de tela anuncia "item
+ *    de lista" para um texto que não é lista.
+ *
+ * 2. "Sobre o Instrutor" apontava para "/" — levava para o topo da Home em vez
+ *    da seção do Ricardo. Agora é "/#sobre".
+ *
+ * 3. O número do WhatsApp estava escrito à mão em três lugares deste arquivo.
+ *    Agora vem de criarUrlWhatsApp, como no resto do projeto.
+ *
+ * Server Component: nenhum estado, nenhum evento.
+ */
+export function Footer() {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-gray-400 transition-all duration-300 hover:bg-brand-orange hover:text-white"
-    >
-      <Icon className="h-5 w-5" />
-    </a>
+    <footer className="border-t border-white/10 bg-brand-ink pb-8 pt-14 text-brand-ink-text">
+      <div className="container mx-auto px-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          <div>
+            <Image
+              src={withBasePath("/logo.png")}
+              alt="T4 Surf"
+              width={190}
+              height={56}
+              className="h-14 w-auto object-contain object-left"
+            />
+
+            <p className="mt-4 max-w-[34ch] text-sm leading-relaxed text-brand-ink-muted">
+              Método de evolução no surf. Cursos online, aulas presenciais e
+              surf trips com Ricardo Torquato.
+            </p>
+
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram da T4 Surf"
+              className="mt-5 inline-flex size-10 items-center justify-center rounded-full bg-white/5 text-brand-ink-muted transition-colors duration-300 hover:bg-brand-orange hover:text-brand-black"
+            >
+              <Instagram className="size-5" aria-hidden="true" />
+            </a>
+          </div>
+
+          <ColunaDeLinks titulo="Cursos" links={LINKS_CURSOS} />
+          <ColunaDeLinks titulo="T4" links={LINKS_T4} />
+
+          <div>
+            <ColunaDeLinks titulo="Ajuda" links={LINKS_AJUDA} />
+
+            <a
+              href={criarUrlWhatsApp(MENSAGEM_RODAPE)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-white/15 px-4 text-sm font-medium transition-colors hover:border-white/35 hover:text-white"
+            >
+              <MessageCircle className="size-4" aria-hidden="true" />
+              WhatsApp oficial
+            </a>
+
+            <p className="mt-3 text-xs text-brand-ink-muted">
+              Seg à Sex: 09h às 18h
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-7 text-xs text-brand-ink-muted md:flex-row">
+          {/*
+            O ano é resolvido em tempo de BUILD, porque o site é export
+            estático — ele não vira sozinho na virada do ano, só quando houver
+            um novo deploy. Como o projeto recebe alterações com frequência,
+            isso se resolve na prática; se um dia ficar meses sem publicar, o
+            ano é o primeiro lugar a conferir.
+          */}
+          <p>
+            © {new Date().getFullYear()} T4 Surf · Aracaju, SE · Todos os
+            direitos reservados.
+          </p>
+
+          <a
+            href={WHATSAPP_DESENVOLVEDORA}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-brand-orange"
+          >
+            Desenvolvido por Anne Siqueira
+          </a>
+        </div>
+      </div>
+    </footer>
   );
 }
