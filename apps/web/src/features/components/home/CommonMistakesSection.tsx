@@ -13,7 +13,7 @@ type Erro = {
  * velocidade". Não foram inventados aqui — as descrições abaixo é que são
  * redação nova sobre o vocabulário dele.
  *
- * Ainda vale ele confirmar se são exatamente esses quatro e nessa ordem.
+ * Os quatro e a ordem foram confirmados por ele em 23/08.
  */
 const ERROS: Erro[] = [
   {

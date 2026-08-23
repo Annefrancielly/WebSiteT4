@@ -81,8 +81,13 @@ export function MobileBuyBar() {
           </p>
         </div>
 
+        {/*
+          Mesmo destino do botão do cabeçalho: a barra fixa serve quem já está
+          decidido e quer ver a oferta. Quem chegou agora tem o Hero, que leva
+          ao seletor.
+        */}
         <Link
-          href="#nivel"
+          href="#cursos"
           className="group inline-flex min-h-[48px] shrink-0 items-center gap-2 rounded-lg bg-brand-orange px-5 font-display text-sm uppercase tracking-wide text-brand-black transition-colors hover:bg-brand-orange/90"
         >
           Ver cursos

@@ -51,7 +51,18 @@ const LINKS_SECUNDARIOS: LinkNav[] = [
   { label: "Perguntas frequentes", href: "/faq/" },
 ];
 
-/** Vira "#nivel" quando o seletor de nível existir (etapa 7). */
+/**
+ * Destino do botão do cabeçalho.
+ *
+ * Decisão do cliente em 23/08: o botão para de vender um curso específico e
+ * passa a levar para a seção que mostra os três. Antes ele apontava direto para
+ * um checkout da Kiwify — o que, numa barra presente em TODAS as páginas,
+ * significava empurrar o mesmo produto para quem talvez precisasse de outro.
+ *
+ * O rótulo acompanhou a mudança: "Ver os cursos" descreve o que acontece ao
+ * clicar. Botão que promete uma coisa e faz outra queima confiança logo no
+ * primeiro clique.
+ */
 const DESTINO_CTA = "#cursos";
 
 const MENSAGEM_WHATSAPP =
@@ -176,7 +187,7 @@ export function SiteHeader() {
               className="group h-auto min-h-[44px] rounded-lg bg-brand-orange px-4 font-display text-[13px] uppercase tracking-wide text-brand-black transition-colors hover:bg-brand-orange/90 sm:px-5 sm:text-sm"
             >
               <Link href={resolverHref(DESTINO_CTA)}>
-                Encontre seu curso
+                Ver os cursos
                 <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </Button>
@@ -258,7 +269,7 @@ export function SiteHeader() {
               asChild
               className="h-auto min-h-[48px] w-full rounded-lg bg-brand-orange font-display text-base uppercase tracking-wide text-brand-black hover:bg-brand-orange/90"
             >
-              <Link href={resolverHref(DESTINO_CTA)}>Encontre seu curso</Link>
+              <Link href={resolverHref(DESTINO_CTA)}>Ver os cursos</Link>
             </Button>
           </SheetClose>
 

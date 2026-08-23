@@ -10,19 +10,17 @@ import { withBasePath } from "@/lib/paths";
  *
  * Isolados aqui porque os dois vão mudar em etapas já previstas:
  *
- * DESTINO_PRIMARIO  -> vira "#nivel" quando o seletor de nível existir.
- *                      Hoje aponta para a vitrine, que é a âncora que a Home
- *                      realmente tem. Link quebrado num CTA principal é
- *                      dinheiro perdido, então ele só muda quando o destino
- *                      estiver no ar.
+ * O botão principal leva ao SELETOR, e não direto à vitrine. A diferença é
+ * comercial: quem acabou de ler a promessa ainda não sabe qual dos três cursos
+ * é o dele, e jogá-lo numa fileira de três produtos transfere a ele um trabalho
+ * que o site pode fazer. O seletor pergunta a situação e entrega o card certo.
  *
- * DESTINO_SECUNDARIO -> vira "#metodo" quando a seção do vídeo entrar na Home.
- *                      Hoje leva para /cursos, onde a explicação do método já
- *                      existe — a promessa do rótulo é cumprida de qualquer
- *                      forma.
+ * É por isso que o cabeçalho e o Hero apontam para lugares diferentes: a barra
+ * fixa serve quem já está decidido e quer ver a oferta; o Hero serve quem
+ * acabou de chegar.
  */
-const DESTINO_PRIMARIO = "#cursos";
-const DESTINO_SECUNDARIO = "/cursos/";
+const DESTINO_PRIMARIO = "#nivel";
+const DESTINO_SECUNDARIO = "#metodo";
 
 /**
  * Hero da Home.

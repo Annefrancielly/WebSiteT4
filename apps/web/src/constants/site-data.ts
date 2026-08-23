@@ -150,16 +150,21 @@ export const PROFESSOR_TRAJETORIA_YOUTUBE_URL = "https://youtu.be/GI9on9VKkOA";
  * Vídeo em que o Ricardo responde à pergunta que dá título à seção do Método:
  * "por que uns levam 3 anos e outros levam 3 meses?".
  *
- * ESTÁ VAZIO DE PROPÓSITO. É só colar aqui o link que o Ricardo mandar — pode
- * ser no formato "https://youtu.be/XXXX" ou "https://www.youtube.com/watch?v=XXXX",
- * os dois são aceitos.
+ * PROVISÓRIO — decisão do cliente em 23/08: usar por enquanto o mesmo vídeo que
+ * já roda na página de Cursos. Quando o vídeo definitivo for gravado, é só
+ * trocar a URL aqui; aceita "https://youtu.be/XXXX" e
+ * "https://www.youtube.com/watch?v=XXXX".
  *
- * Enquanto estiver vazio, a seção existe com o título e o texto, e o bloco do
- * vídeo simplesmente não é renderizado. Preferi assim a mostrar uma caixa
- * "vídeo em breve": se esta versão for publicada antes do link chegar, a página
- * continua parecendo pronta, e não inacabada.
+ * A URL está escrita, e não apontando para COURSE_DETAILS, de propósito: são
+ * dois vídeos que por ora coincidem, não o mesmo vídeo. Referenciar o outro
+ * faria a seção do Método mudar sozinha no dia em que a prévia do curso fosse
+ * trocada.
+ *
+ * Se algum dia esta constante ficar vazia, a seção continua existindo com
+ * título e texto e o bloco do vídeo simplesmente não é renderizado — a página
+ * nunca fica com cara de inacabada.
  */
-export const METODO_VIDEO_YOUTUBE_URL = "";
+export const METODO_VIDEO_YOUTUBE_URL = "https://youtu.be/tbGmUWUBvxo";
 
 /**
  * Números da faixa de prova social, logo abaixo do Hero.
@@ -167,15 +172,18 @@ export const METODO_VIDEO_YOUTUBE_URL = "";
  * PROCEDÊNCIA DE CADA UM — importante, porque número de prova social errado é
  * o tipo de erro que custa credibilidade e não se conserta com deploy:
  *
- *   500+ alunos    já publicado no site (Hero e StatsStrip antigos)
- *   5+ anos        já publicado no site (selo "Instrutor Profissional há 5+ anos")
- *   5+ estados     já publicado no site (StatsStrip antigo)
- *   5,0 no Google  A CONFIRMAR com o Ricardo
+ *   5,0 no Google    confirmado pelo Ricardo em 23/08
+ *   35 avaliações    confirmado pelo Ricardo em 23/08
+ *   500+ alunos      já publicado no site (Hero e StatsStrip antigos)
+ *   5+ anos          já publicado no site (selo "Instrutor Profissional há 5+ anos")
  *
- * Os três primeiros a T4 já afirma publicamente hoje; repeti-los não inventa
- * nada. O quarto veio da ficha do Google e ainda não foi confirmado por ele.
- * Se ele não confirmar, basta apagar o item: a grade se ajusta sozinha para
- * três colunas.
+ * Ficou de fora o "150 alunos / 4.9" que ainda consta em COURSE_DETAILS: ele
+ * contradiz o que o site publica e é o dado mais velho dos dois. Vale corrigir
+ * lá quando aquela seção for refatorada.
+ *
+ * Também ficou de fora "5+ estados", do StatsStrip antigo: com a avaliação e a
+ * contagem do Google ocupando dois lugares, ele seria o quinto item numa grade
+ * de quatro. Nota e número de avaliações vendem mais que cobertura geográfica.
  *
  * `valor` é número, e não texto, porque o contador precisa animar até ele.
  * O "+" e o "★" moram em `sufixo`.
@@ -188,10 +196,10 @@ export type ProvaSocial = {
 };
 
 export const PROVAS_SOCIAIS: ProvaSocial[] = [
-  { valor: 5, casasDecimais: 1, sufixo: "★", rotulo: "no Google" },
+  { valor: 5, casasDecimais: 1, sufixo: "★", rotulo: "nota no Google" },
+  { valor: 35, rotulo: "avaliações" },
   { valor: 500, sufixo: "+", rotulo: "alunos formados" },
   { valor: 5, sufixo: "+", rotulo: "anos ensinando" },
-  { valor: 5, sufixo: "+", rotulo: "estados atendidos" },
 ];
 
 /**
