@@ -162,6 +162,39 @@ export const PROFESSOR_TRAJETORIA_YOUTUBE_URL = "https://youtu.be/GI9on9VKkOA";
 export const METODO_VIDEO_YOUTUBE_URL = "";
 
 /**
+ * Números da faixa de prova social, logo abaixo do Hero.
+ *
+ * PROCEDÊNCIA DE CADA UM — importante, porque número de prova social errado é
+ * o tipo de erro que custa credibilidade e não se conserta com deploy:
+ *
+ *   500+ alunos    já publicado no site (Hero e StatsStrip antigos)
+ *   5+ anos        já publicado no site (selo "Instrutor Profissional há 5+ anos")
+ *   5+ estados     já publicado no site (StatsStrip antigo)
+ *   5,0 no Google  A CONFIRMAR com o Ricardo
+ *
+ * Os três primeiros a T4 já afirma publicamente hoje; repeti-los não inventa
+ * nada. O quarto veio da ficha do Google e ainda não foi confirmado por ele.
+ * Se ele não confirmar, basta apagar o item: a grade se ajusta sozinha para
+ * três colunas.
+ *
+ * `valor` é número, e não texto, porque o contador precisa animar até ele.
+ * O "+" e o "★" moram em `sufixo`.
+ */
+export type ProvaSocial = {
+  valor: number;
+  casasDecimais?: number;
+  sufixo?: string;
+  rotulo: string;
+};
+
+export const PROVAS_SOCIAIS: ProvaSocial[] = [
+  { valor: 5, casasDecimais: 1, sufixo: "★", rotulo: "no Google" },
+  { valor: 500, sufixo: "+", rotulo: "alunos formados" },
+  { valor: 5, sufixo: "+", rotulo: "anos ensinando" },
+  { valor: 5, sufixo: "+", rotulo: "estados atendidos" },
+];
+
+/**
  * Telefone comercial da T4, só dígitos e com código do país — é o formato que
  * a API do WhatsApp exige em wa.me.
  *

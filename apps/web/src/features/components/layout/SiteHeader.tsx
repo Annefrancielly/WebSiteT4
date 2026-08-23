@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,6 +14,7 @@ import {
   SheetTrigger,
 } from "@/features/components/ui/sheet";
 import { criarUrlWhatsApp } from "@/constants/site-data";
+import { useScrolledPast } from "@/hooks/use-scrolled-past";
 import { withBasePath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
@@ -75,50 +75,8 @@ function temHeroEscuro(pathname: string): boolean {
   return ROTAS_COM_HERO_ESCURO.includes(semBarraFinal);
 }
 
-/**
- * Diz se a página já rolou além do topo.
- *
- * O listener é `passive: true` — promete ao navegador que não vamos chamar
- * preventDefault, o que o libera para rolar sem esperar o JavaScript. Sem isso,
- * um listener de scroll trava a rolagem no celular.
- *
- * E a leitura acontece dentro de requestAnimationFrame, no máximo uma por
- * quadro. O evento de scroll dispara dezenas de vezes por segundo; sem o
- * agendamento, seriam dezenas de renderizações do React por segundo para
- * trocar uma classe.
- */
-function useRolouDoTopo(limite = 40): boolean {
-  const [rolou, setRolou] = useState(false);
-
-  useEffect(() => {
-    let agendado = false;
-
-    const avaliar = () => {
-      agendado = false;
-      setRolou(window.scrollY > limite);
-    };
-
-    const aoRolar = () => {
-      if (agendado) return;
-      agendado = true;
-      requestAnimationFrame(avaliar);
-    };
-
-    // A primeira leitura também passa pelo rAF: chamar setState direto no corpo
-    // do efeito provoca renderização em cascata. Cobre o caso de a página abrir
-    // já rolada (recarregar no meio, ou voltar pelo histórico).
-    const primeira = requestAnimationFrame(avaliar);
-
-    window.addEventListener("scroll", aoRolar, { passive: true });
-
-    return () => {
-      cancelAnimationFrame(primeira);
-      window.removeEventListener("scroll", aoRolar);
-    };
-  }, [limite]);
-
-  return rolou;
-}
+/** Ponto em que o cabeçalho deixa de ser transparente. */
+const LIMITE_DE_ROLAGEM = 40;
 
 /**
  * Cabeçalho do site, em dois níveis.
@@ -139,7 +97,7 @@ function useRolouDoTopo(limite = 40): boolean {
  */
 export function SiteHeader() {
   const pathname = usePathname();
-  const rolou = useRolouDoTopo();
+  const rolou = useScrolledPast(LIMITE_DE_ROLAGEM);
 
   const transparente = temHeroEscuro(pathname) && !rolou;
 
